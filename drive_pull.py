@@ -42,6 +42,7 @@ FILE_ENV = {
     "mis": os.environ.get("CASHIFY_MIS_FILE_ID"),
     "model": os.environ.get("CASHIFY_MODEL_FILE_ID"),
     "growth": os.environ.get("CASHIFY_GROWTH_HUDDLE_FILE_ID"),
+    "investment": os.environ.get("CASHIFY_INVESTMENT_PROFILE_FILE_ID"),
 }
 
 def env_truthy(name):
@@ -126,9 +127,11 @@ def modified_key(f):
         return datetime.min
 
 def newest_by_modified(svc, folder_id, predicate, label):
-    files = [f for f in list_files(svc, folder_id) if predicate(f)]
+    visible = list_files(svc, folder_id)
+    files = [f for f in visible if predicate(f)]
     if not files:
-        sys.exit(f"ERROR: no {label} found in folder {folder_id}")
+        names = ", ".join(f["name"] for f in visible) or "none"
+        sys.exit(f"ERROR: no {label} found in folder {folder_id}. Seen: {names}")
     return sorted(files, key=modified_key, reverse=True)[0]
 
 def latest_mis_by_filename_month(svc, folder_id):
@@ -187,7 +190,16 @@ def main():
     else:
         growth = newest_by_modified(svc, growth_folder, lambda f: "growth" in f["name"].lower() and "huddle" in f["name"].lower(), "growth huddle workbook")
     captable = newest_by_modified(svc, cap_folder, lambda f: f["mimeType"] == "application/pdf" or "cap" in f["name"].lower(), "cap table PDF")
-    investment = newest_by_modified(svc, cap_folder, lambda f: "investment" in f["name"].lower() or "valuation" in f["name"].lower(), "investment profile workbook")
+    if FILE_ENV["investment"]:
+        investment = get_file(svc, FILE_ENV["investment"])
+        print(f"  using exact investment profile file: {investment['name']} ({investment['id']})")
+    else:
+        investment = newest_by_modified(
+            svc,
+            cap_folder,
+            lambda f: any(token in f["name"].lower() for token in ("investment", "valuation", "profile")),
+            "investment profile workbook",
+        )
 
     download(svc, mis, "mis.xlsx")
     download(svc, model, "model.xlsx")

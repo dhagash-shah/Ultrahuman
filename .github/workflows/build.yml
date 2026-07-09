@@ -37,6 +37,7 @@ jobs:
           CASHIFY_GROWTH_HUDDLE_FILE_ID: ${{ vars.CASHIFY_GROWTH_HUDDLE_FILE_ID }}
           CASHIFY_MODEL_FILE_ID: ${{ vars.CASHIFY_MODEL_FILE_ID }}
           CASHIFY_CAP_TABLES_FOLDER_ID: ${{ vars.CASHIFY_CAP_TABLES_FOLDER_ID }}
+          CASHIFY_INVESTMENT_PROFILE_FILE_ID: ${{ vars.CASHIFY_INVESTMENT_PROFILE_FILE_ID }}
           COMPANY_NAME: Ultrahuman
         run: python3 drive_pull.py
 
