@@ -102,7 +102,7 @@ def shift_years(months, k):
     return [(y - k, m) for (y, m) in months]
 
 def min_reporting_ym():
-    raw = os.environ.get("CASHIFY_MIN_REPORTING_YM", "2026-05")
+    raw = os.environ.get("CASHIFY_MIN_REPORTING_YM", "1900-01")
     try:
         y, m = raw.split("-", 1)
         return int(y), int(m)
@@ -371,7 +371,7 @@ def build(mis_path, model_path):
     fy = f"FY{str((fy_start_year(ry,rm)+1))[2:]}"
     mis_block = {
         "meta": {
-            "month": monthname, "fy": fy, "company": "Cashify",
+            "month": monthname, "fy": fy, "company": os.environ.get("COMPANY_NAME", "Ultrahuman"),
             "subtitle": "Monthly performance review — Actuals vs LY, AOP and Blume Model",
             "reportingYM": [ry, rm],
             # Viewable source links (item 11). Edit to exact per-file share URLs.

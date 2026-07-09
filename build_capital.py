@@ -14,18 +14,21 @@ USAGE
 
 Run AFTER build_data.py so the rest of data.json already exists.
 """
-import sys, json, re
+import os, sys, json, re
 from pathlib import Path
 import openpyxl
 
 MN_TO_CR = 0.1   # ₹ Mn → ₹ Cr
 
+def company_name():
+    return os.environ.get("COMPANY_NAME", "Ultrahuman").strip().lower()
+
 # ── Paste your Google Drive view-links here (shown as buttons in the dashboard) ─
 LINKS = {
-    "capTable":         "https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP",
-    "valuation":        "https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP",
-    "roundWise":        "https://drive.google.com/drive/folders/1FPv8GEhseyyfBqo8Miwk918rvMNyOX9y",
-    "investmentProfile":"https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP",
+    "capTable":         "https://drive.google.com/drive/folders/1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz",
+    "valuation":        "https://drive.google.com/drive/folders/1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz",
+    "roundWise":        "https://drive.google.com/drive/folders/1ILRNcbx54HFP8CNdHkvbdH-hnKFjfPpX",
+    "investmentProfile":"https://drive.google.com/drive/folders/1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz",
 }
 # ────────────────────────────────────────────────────────────────────────────────
 
@@ -144,7 +147,7 @@ def parse_investment_profile(xlsx_path):
         for r in range(1, ws.max_row + 1):
             for c in range(1, min(ws.max_column, 10) + 1):
                 v = ws.cell(r, c).value
-                if isinstance(v, str) and v.strip().lower() == "cashify":
+                if isinstance(v, str) and v.strip().lower() == company_name():
                     crow = r; break
             if crow:
                 break

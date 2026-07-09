@@ -1,4 +1,4 @@
-# Cashify Growth Huddle — dashboard
+# Ultrahuman Growth Huddle — dashboard
 
 Static dashboard on Vercel with four modules: **MIS Dashboard**, **Capital & Cap
 Table**, **Comps**, **Special Projects**. The MIS module is computed **directly from
@@ -56,11 +56,11 @@ is unit-labelled. **Note:** the prior "₹8.9 Cr cost / ₹10.3 Cr MTM" were act
 
 1. **Service account:** in Google Cloud, create a service account + JSON key; enable
    the Drive API.
-2. **Share the Cashify Drive folders** with the service account's email (Viewer):
-   the Cashify root folder, MIS folder, Growth Huddle folder and Cap Tables folder.
+2. **Share the Ultrahuman Drive folders** with the service account's email (Viewer):
+   the Ultrahuman root folder, MIS folder, Growth Huddle folder and Cap Tables folder.
 3. **GitHub → Settings → Secrets and variables → Actions:**
    - Secret `GOOGLE_SERVICE_ACCOUNT_JSON` = the full key JSON.
-   - Variable `CASHIFY_ROOT_FOLDER_ID` = `1ncwuaUigSvXsZce9TWq7owAFFssiXMEs`.
+   - Variable `CASHIFY_ROOT_FOLDER_ID` = `1TlP_wE_sZ15qi0qdod0NUssqXcC50e-6`.
    - Recommended variables:
      - `CASHIFY_MIS_FOLDER_ID`
      - `CASHIFY_GROWTH_HUDDLE_FOLDER_ID`
@@ -79,9 +79,9 @@ checks run every build (incl. the Dec '25 control =
 ```bash
 pip install -r requirements.txt
 # order matters — build_data writes a legacy capital block, build_capital overrides it
-python3 build_data.py    "Growth Huddle Cashify.xlsx" data.json          # comps + special projects
+python3 build_data.py    growth_huddle.xlsx data.json                    # comps + special projects
 python3 build_mis.py     mis.xlsx model.xlsx data.json                   # MIS block
-python3 build_capital.py captable.pdf investment_profile.xlsx "Growth Huddle Cashify.xlsx" data.json
+python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx data.json
 python3 -m http.server 8766                               # http://localhost:8766
 ```
 (`fetch` needs HTTP — opening `index.html` via `file://` won't load data.)
@@ -93,6 +93,6 @@ python3 -m http.server 8766                               # http://localhost:876
   Protection**. The "View MIS / View Blume Model" links point to Drive (item 11) —
   edit `meta.links` in `build_mis.py` to exact per-file share URLs if preferred.
 - The **Capital / Comps / Special Projects** modules currently source from
-  `Growth Huddle Cashify.xlsx` via `build_data.py`. To automate those from Drive
+  `growth_huddle.xlsx` via `build_data.py`. To automate those from Drive
   too, add them to the folder and extend `drive_pull.py` + the workflow the same way.
 - **Store count (item 10)** was intentionally skipped — not a clean actual in the MIS.

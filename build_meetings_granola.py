@@ -121,7 +121,7 @@ def note_text(note):
 
 
 def is_wanted(note):
-    query = os.environ.get("GRANOLA_MEETING_QUERY", "Cashify").strip().lower()
+    query = os.environ.get("GRANOLA_MEETING_QUERY", "Ultrahuman").strip().lower()
     text = note_text(note).lower()
     if query and query not in text:
         return False

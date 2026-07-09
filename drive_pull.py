@@ -27,7 +27,8 @@ from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.http import MediaIoBaseDownload
 
-ROOT_FOLDER_ID = os.environ.get("CASHIFY_ROOT_FOLDER_ID", os.environ.get("DRIVE_FOLDER_ID", "1ncwuaUigSvXsZce9TWq7owAFFssiXMEs"))
+COMPANY_NAME = os.environ.get("COMPANY_NAME", "Ultrahuman")
+ROOT_FOLDER_ID = os.environ.get("CASHIFY_ROOT_FOLDER_ID", os.environ.get("DRIVE_FOLDER_ID", "1TlP_wE_sZ15qi0qdod0NUssqXcC50e-6"))
 SHEET_MIME = "application/vnd.google-apps.spreadsheet"
 XLSX_MIME  = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
@@ -39,6 +40,8 @@ FOLDER_ENV = {
 
 FILE_ENV = {
     "mis": os.environ.get("CASHIFY_MIS_FILE_ID"),
+    "model": os.environ.get("CASHIFY_MODEL_FILE_ID"),
+    "growth": os.environ.get("CASHIFY_GROWTH_HUDDLE_FILE_ID"),
 }
 
 def env_truthy(name):
@@ -173,8 +176,16 @@ def main():
         if FILE_ENV["mis"]:
             print("  ignoring CASHIFY_MIS_FILE_ID because CASHIFY_FORCE_MIS_FILE_ID is not true; selecting latest MIS by filename month")
         mis = latest_mis_by_filename_month(svc, mis_folder)
-    model = newest_by_modified(svc, growth_folder, lambda f: "model" in f["name"].lower(), "model workbook")
-    growth = newest_by_modified(svc, growth_folder, lambda f: "growth" in f["name"].lower() and "huddle" in f["name"].lower(), "growth huddle workbook")
+    if FILE_ENV["model"]:
+        model = get_file(svc, FILE_ENV["model"])
+        print(f"  using exact model file: {model['name']} ({model['id']})")
+    else:
+        model = newest_by_modified(svc, growth_folder, lambda f: "model" in f["name"].lower(), "model workbook")
+    if FILE_ENV["growth"]:
+        growth = get_file(svc, FILE_ENV["growth"])
+        print(f"  using exact Growth Huddle file: {growth['name']} ({growth['id']})")
+    else:
+        growth = newest_by_modified(svc, growth_folder, lambda f: "growth" in f["name"].lower() and "huddle" in f["name"].lower(), "growth huddle workbook")
     captable = newest_by_modified(svc, cap_folder, lambda f: f["mimeType"] == "application/pdf" or "cap" in f["name"].lower(), "cap table PDF")
     investment = newest_by_modified(svc, cap_folder, lambda f: "investment" in f["name"].lower() or "valuation" in f["name"].lower(), "investment profile workbook")
 
@@ -183,7 +194,7 @@ def main():
     download(svc, growth, "growth_huddle.xlsx")
     download(svc, captable, "captable.pdf")
     download(svc, investment, "investment_profile.xlsx")
-    print("✓ pulled latest Cashify source files from Drive")
+    print(f"✓ pulled latest {COMPANY_NAME} source files from Drive")
 
 if __name__ == "__main__":
     main()

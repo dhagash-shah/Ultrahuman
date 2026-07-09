@@ -10,13 +10,16 @@ The "mis" block is preserved from any prior data.json (written by the cashify-mo
 USAGE
     python3 build_data.py growth_huddle.xlsx [data.json]
 """
-import sys, json, re, datetime
+import os, sys, json, re, datetime
 from pathlib import Path
 import openpyxl
 
 
 def norm(v):
     return str(v).strip() if v is not None else ""
+
+def company_name():
+    return os.environ.get("COMPANY_NAME", "Ultrahuman")
 
 def find_row(ws, col, predicate, start=1, end=None):
     end = end or ws.max_row
@@ -204,7 +207,7 @@ def parse_public_markets(ws):
                 stats[key] = candidate
         else:
             o = row_obj(r)
-            if (o["status"] or "").lower() == "private" or low == "cashify":
+            if (o["status"] or "").lower() == "private" or low == company_name().lower():
                 if subject is None or score_row(o) > score_row(subject):
                     subject = o
             else:
@@ -375,7 +378,7 @@ def main():
 
     data = {
         "meta": {
-            "company": "Cashify",
+            "company": company_name(),
             "title": "Growth Huddle",
             "source": Path(xlsx).name,
             "builtFrom": "build_data.py",

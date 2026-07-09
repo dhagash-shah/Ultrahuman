@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cashify — Growth Huddle</title>
-<meta name="description" content="Cashify Growth Huddle: MIS dashboard, capital & cap table, comps, special projects.">
+<title>Ultrahuman — Growth Huddle</title>
+<meta name="description" content="Ultrahuman Growth Huddle: MIS dashboard, capital & cap table, comps, news, meetings and special projects.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -218,8 +218,8 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
 <body>
   <header class="mast">
     <div class="wrap">
-      <p class="eyebrow" id="eyebrow">Cashify · Growth Huddle · FY26</p>
-      <h1 class="month">Cashify</h1>
+      <p class="eyebrow" id="eyebrow">Ultrahuman · Growth Huddle · FY26</p>
+      <h1 class="month">Ultrahuman</h1>
       <p class="subtitle">Monthly growth huddle — MIS, capital structure, comparables and special projects.</p>
       <nav class="tabs" id="tabs" role="tablist" aria-label="Modules">
         <button role="tab" data-tab="mis"      aria-selected="true">MIS Dashboard</button>
@@ -326,7 +326,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
         <div class="news-grid" id="news-industry"></div>
       </section>
       <section>
-        <div class="sec-head"><h2>Companies</h2><span class="tag">Cashify · peers · adjacent players</span></div>
+        <div class="sec-head"><h2>Companies</h2><span class="tag">Ultrahuman · peers · adjacent players</span></div>
         <div class="news-grid" id="news-companies"></div>
       </section>
     </div>
@@ -335,7 +335,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
     <div class="module" id="mod-meetings" role="tabpanel">
       <div class="mod-head">
         <h2>Recent Meetings</h2>
-        <p>Latest Cashify meeting notes pulled from Granola, showing key discussion bullets and source links.</p>
+        <p>Latest Ultrahuman meeting notes pulled from Granola, showing key discussion bullets and source links.</p>
       </div>
       <section>
         <div class="sec-head"><h2>Latest Notes</h2><span class="tag">Granola · recent meetings</span></div>
@@ -638,7 +638,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
             <span class="bar-track"><span class="bar-fill price" style="transform:scaleX(${priceW/100})"></span></span>
             <span class="val">${pc1(aG)}</span></div>
         </div>
-        <p class="foot">Cashify is scaling by moving <b>more devices</b>, not charging more per device.
+        <p class="foot">Ultrahuman is scaling through <b>volume growth</b>, not only pricing.
           ${share != null ? `Refurbished is the largest segment at <b>${(share*100).toFixed(0)}% of revenue</b>; its growth decomposes into units ${pc1(uG)} and ASP ${pc1(aG)}.` : ''}</p>`;
     }
 
@@ -787,7 +787,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
   function renderFooter(D) {
     const today = new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'});
     const m = D.meta || {};
-    const src = [m.misSource, m.modelSource].filter(Boolean).join(' + ') || 'Growth Huddle Cashify.xlsx';
+    const src = [m.misSource, m.modelSource].filter(Boolean).join(' + ') || 'Growth Huddle Ultrahuman.xlsx';
     document.getElementById('foot').textContent =
       `[M] = Blume Model · Source: ${src} · data.json built locally, committed to repo · Rendered ${today}`;
   }
