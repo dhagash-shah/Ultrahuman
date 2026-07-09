@@ -518,7 +518,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
 
     function renderKpis(cfg) {
       let items = ['Revenue Post-Tax', 'Gross Margin 2%', 'EBITDA', 'EBITDA%'].filter(name => P[name]);
-      if (!items.length) items = ['Gross Revenue', 'Net Revenue', 'Gross Margin', 'EBITDA Margin'].filter(name => P[name]);
+      if (!P['Revenue Post-Tax']) items = ['Gross Revenue', 'Net Revenue', 'Gross Margin', 'EBITDA Margin'].filter(name => P[name]);
       document.getElementById('kpis').innerHTML = items.map(name => {
         const row = P[name]; if (!row) return '';
         const chips = [chip('vs LY', delta(row, cfg.cur, cfg.ly))];
@@ -708,13 +708,13 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
     document.getElementById('funds-tbl').innerHTML =
       `<thead><tr><th>Fund</th><th>Status</th><th>Stake</th><th>Invested (₹ Cr)</th>
         <th>Value (₹ Cr)</th><th>MOIC</th><th>Gross IRR</th></tr></thead>
-       <tbody>${funds.map(f => `<tr>
+       <tbody>${funds.length ? funds.map(f => `<tr>
          <td>${safe(f.fund)}</td><td>${safe(f.status)||'—'}</td>
          <td class="num">${typeof f.stakeCurrent==='number' ? pct(f.stakeCurrent,2) : '—'}</td>
          <td class="num">${cr(f.investedCostCr)}</td>
          <td class="num">${valCell(f)}</td>
          <td class="num">${mult(f.moic)}</td>
-         <td class="num">${typeof f.irr==='number' ? pct(f.irr,0) : '—'}</td></tr>`).join('')}
+         <td class="num">${typeof f.irr==='number' ? pct(f.irr,0) : '—'}</td></tr>`).join('') : `<tr><td colspan="7">No fund-wise investment profile rows parsed yet.</td></tr>`}
        <tr class="total"><td>Blume — active</td><td></td>
          <td class="num">${pct(b.currentStake,2)}</td>
          <td class="num">${cr(b.investmentCostCr)}</td>
@@ -733,6 +733,11 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
 
     document.getElementById('cap-tag').textContent = `diluted holding %${C.asOf ? ' · as on '+C.asOf : ''}`;
     const cap = (C.capTable||[]).filter(x => !x.isTotal);
+    if (!cap.length) {
+      document.getElementById('cap-list').innerHTML =
+        `<div class="meet-empty">Cap table PDF format was not parsed yet. Fund-wise Blume holding above is populated from the Investment Profile.</div>`;
+      return;
+    }
     const maxPct = Math.max(...cap.map(x => x.pct||0), 0.001);
     document.getElementById('cap-list').innerHTML =
       cap.map(x => {
@@ -762,11 +767,11 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
     document.getElementById('pm-tbl').innerHTML =
       `<thead><tr><th>Company</th><th>Mkt Cap</th><th>Revenue</th><th>Rev gr.</th>
         <th>Gross M.</th><th>EBITDA M.</th><th>MC/Rev</th><th>MC/EBITDA</th></tr></thead>
-       <tbody>${rowsData.map(r => `<tr class="${r._subject?'accent':''}">
+       <tbody>${rowsData.length ? rowsData.map(r => `<tr class="${r._subject?'accent':''}">
          <td>${safe(r.company)}</td>
          ${cell(r.marketCap,cr)}${cell(r.revenue,cr)}${cell(r.revGrowth,v=>pct(v,1))}
          ${cell(r.grossMargin,v=>pct(v,1))}${cell(r.ebitdaMargin,v=>pct(v,1))}
-         ${cell(r.mcRevenue,mult)}${cell(r.mcEbitda,mult)}</tr>`).join('')}
+         ${cell(r.mcRevenue,mult)}${cell(r.mcEbitda,mult)}</tr>`).join('') : `<tr><td colspan="8">No public market comparables found in the Growth Huddle workbook yet.</td></tr>`}
        ${statRow('Peer median', PM.stats?.median)}
        ${statRow('Peer mean',   PM.stats?.mean)}
        ${statRow('Peer high',   PM.stats?.high)}

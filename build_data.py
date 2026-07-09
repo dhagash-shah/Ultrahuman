@@ -39,6 +39,8 @@ def header_map(ws, row):
 def num(v):
     if v is None or v == "":
         return None
+    if isinstance(v, str) and v.strip().upper() in {"NM", "NA", "N/A", "-"}:
+        return None
     try:
         return float(v)
     except (TypeError, ValueError):
@@ -155,28 +157,67 @@ def parse_exit_thinking(ws):
 
 # ── Public Markets → trading comps ───────────────────────────────────────── #
 def parse_public_markets(ws):
-    hdr = find_row(ws, 3, lambda v: v == "Company") or find_row(ws, 1, lambda v: v == "Company")
+    def clean_label(v):
+        return re.sub(r"\s+", " ", norm(v).lower().replace("\n", " "))
+
+    def find_header():
+        candidates = []
+        for r in range(1, ws.max_row + 1):
+            labels = {clean_label(ws.cell(r, c).value): c for c in range(1, ws.max_column + 1) if norm(ws.cell(r, c).value)}
+            if not labels:
+                continue
+            has_company = "company" in labels or "name" in labels
+            has_market_cap = any("market cap" in k or k == "mkt cap" for k in labels)
+            has_revenue = any("revenue" in k or "total revenues" in k for k in labels)
+            has_valuation = any("m cap / revenue" in k or "mc/rev" in k or "p/s" in k for k in labels)
+            if has_company and has_market_cap and has_revenue and has_valuation:
+                score = 0
+                score += 5 if "company" in labels else 0
+                score += 3 if "status" in labels else 0
+                score += 2 if "m cap / revenue" in labels else 0
+                score += 2 if "m cap / ebitda" in labels else 0
+                score += 1 if "gross margin" in labels else 0
+                candidates.append((score, r))
+        return max(candidates)[1] if candidates else None
+
+    hdr = find_header()
     if not hdr:
         return {}
-    hm = {}
-    for c in range(1, ws.max_column + 1):
-        lab = norm(ws.cell(hdr, c).value)
-        if lab:
-            hm[lab] = c
-    c_name = hm.get("Company")
+    hm = header_map(ws, hdr)
+    hm_norm = {clean_label(k): c for k, c in hm.items()}
+
+    def col(*aliases):
+        wanted = [clean_label(a) for a in aliases]
+        for a in wanted:
+            if a in hm_norm:
+                return hm_norm[a]
+        for lab, c in hm_norm.items():
+            if any(a in lab for a in wanted):
+                return c
+        return None
+
+    c_name = col("Company", "Name")
+    c_status = col("Status")
+    c_market_cap = col("Market Cap", "Mkt Cap")
+    c_revenue = col("Revenue", "Total Revenues (LTM)", "Total Revenues")
+    c_rev_growth = col("Rev Growth", "Rev Gr.", "Total Revenues/CAGR (1Y TTM)")
+    c_gross_margin = col("Gross Margin", "Gross M.", "Gross Profit Margin % (LTM)")
+    c_ebitda_margin = col("EBITDA Margin", "EBITDA M.", "EBITDA Margin % (LTM)")
+    c_mc_revenue = col("M Cap / Revenue", "MC/Rev", "P/S (LTM)", "PS Ratio")
+    c_mc_ebitda = col("M Cap / EBITDA", "MC/EBITDA", "EV/EBITDA (LTM)")
 
     def row_obj(r):
-        get = lambda key: num(ws.cell(r, hm[key]).value) if key in hm else None
+        get = lambda c: num(ws.cell(r, c).value) if c else None
         return {
             "company":      norm(ws.cell(r, c_name).value),
-            "status":       norm(ws.cell(r, hm["Status"]).value) if "Status" in hm else "",
-            "marketCap":    get("Market Cap"),
-            "revenue":      get("Revenue"),
-            "revGrowth":    get("Rev Growth"),
-            "grossMargin":  get("Gross Margin"),
-            "ebitdaMargin": get("EBITDA Margin"),
-            "mcRevenue":    get("M Cap / Revenue"),
-            "mcEbitda":     get("M Cap / EBITDA"),
+            "status":       norm(ws.cell(r, c_status).value) if c_status else "",
+            "marketCap":    get(c_market_cap),
+            "revenue":      get(c_revenue),
+            "revGrowth":    get(c_rev_growth),
+            "grossMargin":  get(c_gross_margin),
+            "ebitdaMargin": get(c_ebitda_margin),
+            "mcRevenue":    get(c_mc_revenue),
+            "mcEbitda":     get(c_mc_ebitda),
         }
 
     def score_row(o):
@@ -188,13 +229,17 @@ def parse_public_markets(ws):
     stat_keys = {"peer mean": "mean", "peer median": "median",
                  "peer high": "high", "peer low": "low"}
     r = hdr + 1
+    blank_streak = 0
+    company_low = company_name().lower()
     while r <= ws.max_row:
         name = norm(ws.cell(r, c_name).value)
         if not name:
-            r += 1
-            if r - hdr > 50:
+            blank_streak += 1
+            if blank_streak > 15:
                 break
+            r += 1
             continue
+        blank_streak = 0
         low = name.lower()
         if low in stat_keys:
             o = row_obj(r)
@@ -207,11 +252,11 @@ def parse_public_markets(ws):
                 stats[key] = candidate
         else:
             o = row_obj(r)
-            if (o["status"] or "").lower() == "private" or low == company_name().lower():
+            if low == company_low:
                 if subject is None or score_row(o) > score_row(subject):
                     subject = o
             else:
-                if score_row(o) >= 3:
+                if score_row(o) >= 2:
                     peers.append(o)
         r += 1
     return {"subject": subject, "peers": peers, "stats": stats}
@@ -397,7 +442,7 @@ def main():
             },
         },
         "comps": {
-            "publicMarkets": parse_public_markets(sheet("Public Markets")) if sheet("Public Markets") else {},
+            "publicMarkets": parse_public_markets(sheet("Comparables", "Public Markets")) if sheet("Comparables", "Public Markets") else {},
             "conCalls":      parse_con_calls(sheet("Con Call Summary"))    if sheet("Con Call Summary") else [],
         },
         "news": parse_news_tracker(sheet("News Tracker", "Live News Tracker")) if sheet("News Tracker", "Live News Tracker") else {"items": [], "industry": [], "companies": []},
