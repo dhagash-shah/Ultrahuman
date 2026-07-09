@@ -1,0 +1,65 @@
+name: Refresh data.json from Google Drive
+
+on:
+  # Run on the 1st of every month at 6:00 AM IST (00:30 UTC)
+  schedule:
+    - cron: "30 0 1 * *"
+  # Also allow manual trigger from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Pull files from Google Drive
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          G_DRIVESECRET: ${{ secrets.G_DRIVESECRET }}
+          CASHIFY_ROOT_FOLDER_ID: ${{ vars.CASHIFY_ROOT_FOLDER_ID }}
+          CASHIFY_MIS_FOLDER_ID: ${{ vars.CASHIFY_MIS_FOLDER_ID }}
+          CASHIFY_MIS_FILE_ID: ${{ vars.CASHIFY_MIS_FILE_ID }}
+          CASHIFY_GROWTH_HUDDLE_FOLDER_ID: ${{ vars.CASHIFY_GROWTH_HUDDLE_FOLDER_ID }}
+          CASHIFY_CAP_TABLES_FOLDER_ID: ${{ vars.CASHIFY_CAP_TABLES_FOLDER_ID }}
+        run: python3 drive_pull.py
+
+      - name: Build data.json (comps, projects, capital skeleton)
+        run: python3 build_data.py growth_huddle.xlsx data.json
+
+      - name: Build MIS block
+        run: python3 build_mis.py mis.xlsx model.xlsx data.json
+
+      - name: Enrich capital block (cap table + fund-wise holding)
+        run: python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx data.json
+
+      - name: Pull recent meetings from Granola
+        env:
+          GRANOLA_API_KEY: ${{ secrets.GRANOLA_API_KEY }}
+          GRANOLA_API_BASE_URL: ${{ vars.GRANOLA_API_BASE_URL }}
+          GRANOLA_MEETING_QUERY: ${{ vars.GRANOLA_MEETING_QUERY }}
+          GRANOLA_MEETING_LIMIT: ${{ vars.GRANOLA_MEETING_LIMIT }}
+          GRANOLA_LOOKBACK_DAYS: ${{ vars.GRANOLA_LOOKBACK_DAYS }}
+          GRANOLA_FOLDER_ID: ${{ vars.GRANOLA_FOLDER_ID }}
+        run: python3 build_meetings_granola.py data.json
+
+      - name: Commit and push updated data.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || git commit -m "chore: refresh data.json [$(date +'%Y-%m-%d')]"
+          git push

@@ -1,0 +1,16 @@
+# credentials — never commit
+credentials.json
+*.key.json
+service_account.json
+
+# downloaded source files — pulled fresh via drive_pull.py
+mis.xlsx
+model.xlsx
+captable.pdf
+investment_profile.xlsx
+growth_huddle.xlsx
+
+# python
+__pycache__/
+*.pyc
+.env

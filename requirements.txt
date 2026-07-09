@@ -1,0 +1,4 @@
+openpyxl
+pdfplumber
+google-api-python-client
+google-auth

@@ -1,0 +1,1196 @@
+{
+  "meta": {
+    "company": "Cashify",
+    "title": "Growth Huddle",
+    "source": "growth_huddle.xlsx",
+    "builtFrom": "build_data.py",
+    "misSource": "mis.xlsx",
+    "modelSource": "model.xlsx"
+  },
+  "mis": {
+    "meta": {
+      "month": "Jun 2026",
+      "fy": "FY27",
+      "company": "Cashify",
+      "subtitle": "Monthly performance review — Actuals vs LY, AOP and Blume Model",
+      "reportingYM": [
+        2026,
+        6
+      ],
+      "links": {
+        "mis": "https://drive.google.com/drive/folders/1FPv8GEhseyyfBqo8Miwk918rvMNyOX9y",
+        "model": "https://drive.google.com/drive/folders/1FPv8GEhseyyfBqo8Miwk918rvMNyOX9y"
+      }
+    },
+    "particulars": [
+      {
+        "type": "abs",
+        "curr": 1769058666.5165343,
+        "prior": 1257690547.1741905,
+        "aop": 1822537058.189375,
+        "ytd": 5241667114.899139,
+        "ytdPrior": 3794905579.796592,
+        "ytdAop": 5430906343.094774,
+        "ttm": 18638311834.639114,
+        "ttmPrior": 12743568542.90347,
+        "ttmAop": 18641913302.563263,
+        "model": 1678268066.4894729,
+        "ytdModel": 5094462604.324339,
+        "ttmModel": 18491107324.554813,
+        "label": "Revenue Post-Tax"
+      },
+      {
+        "type": "abs",
+        "curr": 328078095.6817372,
+        "prior": 243663358.5194465,
+        "aop": 324992612.4433236,
+        "ytd": 971843526.5240936,
+        "ytdPrior": 712325336.2937753,
+        "ytdAop": 968826358.5606964,
+        "ttm": 3458135934.094817,
+        "ttmPrior": 2452267847.532152,
+        "ttmAop": 3496930475.722299,
+        "model": 307331626.1498557,
+        "ytdModel": 920867947.4924746,
+        "ttmModel": 3407160363.5408173,
+        "label": "Gross Margin 2"
+      },
+      {
+        "type": "pct",
+        "curr": 0.18545348545605783,
+        "prior": 0.19373872139447593,
+        "aop": 0.1783187952107773,
+        "ytd": 0.18540733419748917,
+        "ytdPrior": 0.18770568102828955,
+        "ytdAop": 0.17839128450309744,
+        "ttm": 0.18553911774712914,
+        "ttmPrior": 0.19243180112981387,
+        "ttmAop": 0.18758431170482223,
+        "model": 0.1831242769176431,
+        "ytdModel": 0.18075860380461192,
+        "ttmModel": 0.18425940122127582,
+        "label": "Gross Margin 2%"
+      },
+      {
+        "type": "abs",
+        "curr": 273235930.7103583,
+        "prior": 192256170.12912732,
+        "aop": 258938318.02103454,
+        "ytd": 808549088.9372923,
+        "ytdPrior": 565084461.4397347,
+        "ytdAop": 773058844.556292,
+        "ttm": 2814418680.265127,
+        "ttmPrior": 1964965306.0112534,
+        "ttmAop": 2775218641.7233276,
+        "model": 252878852.97565666,
+        "ytdModel": 757003040.280442,
+        "ttmModel": 2762872640.085896,
+        "label": "Contribution Margin 1"
+      },
+      {
+        "type": "pct",
+        "curr": 0.15445272442456026,
+        "prior": 0.1528644471098977,
+        "aop": 0.1420757492186636,
+        "ytd": 0.15425418501664054,
+        "ytdPrior": 0.14890606618729718,
+        "ytdAop": 0.14234435206919227,
+        "ttm": 0.15100180237539318,
+        "ttmPrior": 0.15419270508067276,
+        "ttmAop": 0.14886983952134006,
+        "model": 0.15067846312813274,
+        "ytdModel": 0.14859330592354808,
+        "ttmModel": 0.14941628922444286,
+        "label": "CM1%"
+      },
+      {
+        "type": "abs",
+        "curr": 182814628.84233558,
+        "prior": 118728260.12401953,
+        "aop": 154713023.12376955,
+        "ytd": 532974097.6975721,
+        "ytdPrior": 349705198.8589102,
+        "ytdAop": 463797030.18490565,
+        "ttm": 1747719507.3007083,
+        "ttmPrior": 1229922634.4521198,
+        "ttmAop": 1701911453.470536,
+        "model": 146934056.99047896,
+        "ytdModel": 439027947.0793494,
+        "ttmModel": 1653773365.1601045,
+        "label": "Contribution Margin 2"
+      },
+      {
+        "type": "pct",
+        "curr": 0.10334006005709077,
+        "prior": 0.09440180686002694,
+        "aop": 0.0848888215625483,
+        "ytd": 0.10168026431564563,
+        "ytdPrior": 0.09215122524277784,
+        "ytdAop": 0.085399563329721,
+        "ttm": 0.09377026861695646,
+        "ttmPrior": 0.09651320431254154,
+        "ttmAop": 0.09129489156225842,
+        "model": 0.08755100566134774,
+        "ytdModel": 0.08617747958473358,
+        "ttmModel": 0.08943614550135766,
+        "label": "CM2%"
+      },
+      {
+        "type": "abs",
+        "curr": 148658472.36870864,
+        "prior": 85959734.1408572,
+        "aop": 109714740.36126822,
+        "ytd": 431184343.2350153,
+        "ytdPrior": 258151776.6603667,
+        "ytdAop": 330622051.2729533,
+        "ttm": 1381021976.698485,
+        "ttmPrior": 896342100.3514036,
+        "ttmAop": 1237421403.804423,
+        "model": 117227439.84143932,
+        "ytdModel": 230816686.28599888,
+        "ttmModel": 1180654328.2270875,
+        "label": "CM2 − Marketing"
+      },
+      {
+        "type": "pct",
+        "curr": 0.08403252824929378,
+        "prior": 0.0683472848976989,
+        "aop": 0.060198907818239854,
+        "ytd": 0.08226091695319575,
+        "ytdPrior": 0.06802587606783189,
+        "ytdAop": 0.06087787753757322,
+        "ttm": 0.07409587246694035,
+        "ttmPrior": 0.07033682106654113,
+        "ttmAop": 0.0663784550287699,
+        "model": 0.06985024751537489,
+        "ytdModel": 0.045307366883029915,
+        "ttmModel": 0.06384984454983215,
+        "label": "CM3%"
+      },
+      {
+        "type": "abs",
+        "curr": 61153211.8987273,
+        "prior": 10397042.655408457,
+        "aop": 29399659.593234524,
+        "ytd": 170005884.6039382,
+        "ytdPrior": 32165852.240381137,
+        "ytdAop": 89676808.96885216,
+        "ttm": 398926389.92309994,
+        "ttmPrior": 76633013.3739711,
+        "ttmAop": 332036470.36469084,
+        "model": 25961503.206129804,
+        "ytdModel": -42981123.61992966,
+        "ttmModel": 185939390.1793641,
+        "label": "EBITDA"
+      },
+      {
+        "type": "pct",
+        "curr": 0.03456822153848889,
+        "prior": 0.008266773316193545,
+        "aop": 0.016131172456071773,
+        "ytd": 0.032433552317869666,
+        "ytdPrior": 0.00847606127847461,
+        "ytdAop": 0.016512309972510093,
+        "ttm": 0.021403568813657216,
+        "ttmPrior": 0.0060134657820509665,
+        "ttmAop": 0.017811287123572012,
+        "model": 0.015469223138133667,
+        "ytdModel": -0.008436831704966475,
+        "ttmModel": 0.010055611430714612,
+        "label": "EBITDA%"
+      },
+      {
+        "type": "abs",
+        "curr": 62688541.8987273,
+        "prior": 16369080.655408457,
+        "aop": 31236233.998268135,
+        "ytd": 140204884.6039382,
+        "ytdPrior": 50012170.24038114,
+        "ytdAop": 95496851.15382096,
+        "ttm": 388207429.57310003,
+        "ttmPrior": 165922262.3739711,
+        "ttmAop": 370963178.421442,
+        "model": 24690465.538340133,
+        "ytdModel": -46839418.96412146,
+        "ttmModel": 115449981.18517232,
+        "label": "EBDT"
+      },
+      {
+        "type": "pct",
+        "curr": 0.03543610117926035,
+        "prior": 0.013015189381988203,
+        "aop": 0.017138874547385177,
+        "ytd": 0.02674814739864228,
+        "ytdPrior": 0.013178765370774205,
+        "ytdAop": 0.01758396207204755,
+        "ttm": 0.020828465207434744,
+        "ttmPrior": 0.013020078466668467,
+        "ttmAop": 0.01989941549456914,
+        "model": 0.014711872335142836,
+        "ytdModel": -0.009194182507957307,
+        "ttmModel": 0.006243540700878597,
+        "label": "EBT%"
+      },
+      {
+        "type": "abs",
+        "curr": 2592180795.9538546,
+        "prior": 1354316834.1043198,
+        "aop": null,
+        "ytd": null,
+        "ytdAop": null,
+        "ytdPrior": null,
+        "ttm": null,
+        "ttmPrior": null,
+        "ttmAop": null,
+        "model": null,
+        "ytdModel": null,
+        "ttmModel": null,
+        "label": "Inventory"
+      },
+      {
+        "type": "days",
+        "curr": 58.607458321392876,
+        "prior": 39.85881264324122,
+        "aop": null,
+        "ytd": null,
+        "ytdAop": null,
+        "ytdPrior": null,
+        "ttm": null,
+        "ttmPrior": null,
+        "ttmAop": null,
+        "model": null,
+        "ytdModel": null,
+        "ttmModel": null,
+        "label": "Inventory Days"
+      },
+      {
+        "type": "abs",
+        "curr": 604350220,
+        "prior": 1453761506.6399999,
+        "aop": null,
+        "ytd": null,
+        "ytdAop": null,
+        "ytdPrior": null,
+        "ttm": null,
+        "ttmPrior": null,
+        "ttmAop": null,
+        "model": null,
+        "ytdModel": null,
+        "ttmModel": null,
+        "label": "Cash"
+      },
+      {
+        "type": "abs",
+        "curr": 330543356,
+        "prior": 50473630.95,
+        "aop": null,
+        "ytd": null,
+        "ytdAop": null,
+        "ytdPrior": null,
+        "ttm": null,
+        "ttmPrior": null,
+        "ttmAop": null,
+        "model": null,
+        "ytdModel": null,
+        "ttmModel": null,
+        "label": "Gross Debt"
+      }
+    ],
+    "segmental": [
+      {
+        "label": "Non-Repair",
+        "rev": {
+          "curr": 558338351.1299999,
+          "prior": 443856586.945736,
+          "aop": 610955126.0827941,
+          "ytd": 1651532506.4949996,
+          "ytdPrior": 1355223490.2324755,
+          "ytdAop": 1843394459.9728627,
+          "ttm": 6189023207.535,
+          "ttmPrior": 4392575473.184732,
+          "ttmAop": 6521099138.256662,
+          "model": 588430732.1585888,
+          "ytdModel": 1819106970.7422237,
+          "ttmModel": 6356597671.782224
+        },
+        "gp": {
+          "curr": 34972721.803524554,
+          "prior": 31779469.223138154,
+          "aop": 38649363.7668767,
+          "ytd": 123337915.08463341,
+          "ytdPrior": 97176683.76228243,
+          "ytdAop": 117699642.25852132,
+          "ttm": 430537040.3565076,
+          "ttmPrior": 274256801.49599075,
+          "ttmAop": 419434267.4381801,
+          "model": 39124972.30657995,
+          "ytdModel": 120953080.73374772,
+          "ttmModel": 428223071.3612196
+        },
+        "gm": {
+          "curr": 0.06263714776666261,
+          "prior": 0.07159850762116407,
+          "aop": 0.06326056058270817,
+          "ytd": 0.07468088856839394,
+          "ytdPrior": 0.07170528290179852,
+          "ytdAop": 0.06384940652379634,
+          "ttm": 0.06956461882908085,
+          "ttmPrior": 0.062436446037237324,
+          "ttmAop": 0.06431956615680448,
+          "model": 0.06649036185288046,
+          "ytdModel": 0.06649036185288049,
+          "ttmModel": 0.06736670990869192
+        }
+      },
+      {
+        "label": "Refurbished",
+        "rev": {
+          "curr": 1044471209.2087375,
+          "prior": 722965027.878624,
+          "aop": 1090600951.142816,
+          "ytd": 3130495087.6241336,
+          "ytdPrior": 2167009004.158354,
+          "ytdAop": 3228412847.9501266,
+          "ttm": 10941090531.250717,
+          "ttmPrior": 7306060716.453655,
+          "ttmAop": 10830684935.61591,
+          "model": 963982951.2529757,
+          "ytdModel": 2906492169.882517,
+          "ttmModel": 10717087613.999601
+        },
+        "gp": {
+          "curr": 168255268.3333665,
+          "prior": 140617429.9645456,
+          "aop": 195285952.7237308,
+          "ytd": 505611297.70185256,
+          "ytdPrior": 404637845.7791226,
+          "ytdAop": 579682727.8368552,
+          "ttm": 1905890644.44777,
+          "ttmPrior": 1369025647.9241042,
+          "ttmAop": 2094955100.5650656,
+          "model": 175232097.6089542,
+          "ytdModel": 528598644.3147242,
+          "ttmModel": 1928807134.1826632
+        },
+        "gm": {
+          "curr": 0.16109134158023566,
+          "prior": 0.1945010125554142,
+          "aop": 0.17906270164086605,
+          "ytd": 0.16151160872307344,
+          "ytdPrior": 0.186726425687502,
+          "ytdAop": 0.17955656700007355,
+          "ttm": 0.1741956744626169,
+          "ttmPrior": 0.18738218871367743,
+          "ttmAop": 0.19342775761816874,
+          "model": 0.18177924970684306,
+          "ytdModel": 0.18186824991036898,
+          "ttmModel": 0.1799749338302587
+        }
+      },
+      {
+        "label": "Market Place",
+        "rev": {
+          "curr": 102972667.37288135,
+          "prior": 59450009.576271184,
+          "aop": 76898364.4899873,
+          "ytd": 285860269.91525424,
+          "ytdPrior": 176788922.20338982,
+          "ytdAop": 229933723.52451646,
+          "ttm": 928612561.1864407,
+          "ttmPrior": 676409045.0847456,
+          "ttmAop": 826075700.8896098,
+          "model": 79218025.25604717,
+          "ytdModel": 232955430.6747399,
+          "ttmModel": 875707721.9459263
+        },
+        "gp": {
+          "curr": 102972667.37288135,
+          "prior": 59450009.576271184,
+          "aop": 76898364.4899873,
+          "ytd": 285860269.91525424,
+          "ytdPrior": 176788922.20338982,
+          "ytdAop": 229933723.52451646,
+          "ttm": 928612561.1864407,
+          "ttmPrior": 676409045.0847456,
+          "ttmAop": 826075700.8896098,
+          "model": 79218025.25604717,
+          "ytdModel": 232955430.6747399,
+          "ttmModel": 875707721.9459263
+        },
+        "gm": {
+          "curr": 1.0,
+          "prior": 1.0,
+          "aop": 1.0,
+          "ytd": 1.0,
+          "ytdPrior": 1.0,
+          "ytdAop": 1.0,
+          "ttm": 1.0,
+          "ttmPrior": 1.0,
+          "ttmAop": 1.0,
+          "model": 1.0,
+          "ytdModel": 1.0,
+          "ttmModel": 1.0
+        }
+      },
+      {
+        "label": "Screen Pro + Accessories",
+        "rev": {
+          "curr": 59719600.924915254,
+          "prior": 28908301.81355923,
+          "aop": 41854573.02965231,
+          "ytd": 165899886.07475084,
+          "ytdPrior": 90356603.0423728,
+          "ytdAop": 122611386.08363909,
+          "ttm": 538235545.0069543,
+          "ttmPrior": 338944969.8342345,
+          "ttmAop": 439596526.94605434,
+          "model": 44125736.86186114,
+          "ytdModel": 130380472.86485878,
+          "ttmModel": 502716131.7970623
+        },
+        "gp": {
+          "curr": 18320600.29196447,
+          "prior": 9305828.79549146,
+          "aop": 11930888.018603528,
+          "ytd": 49154679.03235282,
+          "ytdPrior": 28194324.388980076,
+          "ytdAop": 34956339.37717358,
+          "ttm": 151745698.4440985,
+          "ttmPrior": 102998014.68121019,
+          "ttmAop": 132008405.97441179,
+          "model": 11245910.018274352,
+          "ytdModel": 32833231.609262627,
+          "ttmModel": 135424251.02100828
+        },
+        "gm": {
+          "curr": 0.3067770046721971,
+          "prior": 0.32190852494582123,
+          "aop": 0.2850557813635075,
+          "ytd": 0.29629121631949046,
+          "ytdPrior": 0.3120339127374933,
+          "ytdAop": 0.28509863964288107,
+          "ttm": 0.28193176733085856,
+          "ttmPrior": 0.30387828068840417,
+          "ttmAop": 0.30029446977548885,
+          "model": 0.25486056025490295,
+          "ytdModel": 0.25182629643700355,
+          "ttmModel": 0.2693851310020755
+        }
+      },
+      {
+        "label": "Enterprise Sales",
+        "rev": {
+          "curr": 3556837.88,
+          "prior": 2510620.96,
+          "aop": 2228043.444124986,
+          "ytd": 7879364.79,
+          "ytdPrior": 5527560.16,
+          "ytdAop": 6553925.563629476,
+          "ttm": 41349989.660000004,
+          "ttmPrior": 29578338.346101694,
+          "ttmAop": 24457000.8550313,
+          "model": 2510620.96,
+          "ytdModel": 5527560.16,
+          "ttmModel": 38998185.029999994
+        },
+        "gp": {
+          "curr": 3556837.88,
+          "prior": 2510620.96,
+          "aop": 2228043.444124986,
+          "ytd": 7879364.79,
+          "ytdPrior": 5527560.16,
+          "ytdAop": 6553925.563629476,
+          "ttm": 41349989.660000004,
+          "ttmPrior": 29578338.346101694,
+          "ttmAop": 24457000.8550313,
+          "model": 2510620.96,
+          "ytdModel": 5527560.16,
+          "ttmModel": 38998185.029999994
+        },
+        "gm": {
+          "curr": 1.0,
+          "prior": 1.0,
+          "aop": 1.0,
+          "ytd": 1.0,
+          "ytdPrior": 1.0,
+          "ytdAop": 1.0,
+          "ttm": 1.0,
+          "ttmPrior": 1.0,
+          "ttmAop": 1.0,
+          "model": 1.0,
+          "ytdModel": 1.0,
+          "ttmModel": 1.0
+        }
+      }
+    ],
+    "refurb": {
+      "units": {
+        "type": "count",
+        "curr": 36532.0,
+        "prior": 26274.285714285714,
+        "aop": 38135.36118178253,
+        "ytd": 110431.0,
+        "ytdPrior": 77782.28571428571,
+        "ytdAop": 113119.9240427285,
+        "ttm": 391742.0,
+        "ttmPrior": 268881.28571428574,
+        "ttmAop": 148020.3215800171,
+        "model": 33637.603584600896,
+        "ytdModel": 101355.32001592481,
+        "ttmModel": 382666.32001592487
+      },
+      "asp": {
+        "type": "asp",
+        "curr": 28590.583850014715,
+        "prior": 27516.067829221225,
+        "aop": 28598.154504009315,
+        "ytd": 28347.973735854368,
+        "ytdPrior": 27859.929600401996,
+        "ytdAop": 28539.736702180482,
+        "ttm": 27929.32729002945,
+        "ttmPrior": 27172.068509881727,
+        "ttmAop": 73170.25675938041,
+        "model": 28657.896179449646,
+        "ytdModel": 28676.266518874912,
+        "ttmModel": 28006.351887863046
+      },
+      "channels": {
+        "online": {
+          "curr": 392476999.54625046,
+          "prior": 313176777.91688687,
+          "ytd": 1153076581.251647,
+          "ytdPrior": 945135389.9666693,
+          "ttm": 4319532376.53824,
+          "ttmPrior": 3266381177.1161313
+        },
+        "retail": {
+          "curr": 651994209.662487,
+          "prior": 409788249.96173704,
+          "ytd": 1977418506.3724866,
+          "ytdPrior": 1221873614.191684,
+          "ttm": 6621558154.712478,
+          "ttmPrior": 4039679539.3375225
+        }
+      }
+    }
+  },
+  "capital": {
+    "unit": "₹ Cr",
+    "asOf": "31 Dec 2025",
+    "blume": {
+      "currentStake": 0.04754272737996933,
+      "investmentCostCr": 72.73,
+      "mtmCr": 85.65,
+      "moic": 1.18,
+      "latestValuationCr": 1988.4,
+      "funds": [
+        {
+          "fund": "Fund IA",
+          "status": "Exited",
+          "stakeCurrent": null,
+          "investedCostCr": 3.6464293999999997,
+          "mtmCr": 49.61946453586104,
+          "realisedCr": 49.61946453586104,
+          "moic": 13.607685517196918,
+          "irr": 0.5253186425781251,
+          "lastRoundValCr": null
+        },
+        {
+          "fund": "Fund IIA",
+          "status": "Active",
+          "stakeCurrent": 0.011442727379969328,
+          "investedCostCr": 7.091325650000001,
+          "mtmCr": 20.012840166000004,
+          "realisedCr": 0.0,
+          "moic": 2.8221578240452123,
+          "irr": 0.18093928222656253,
+          "lastRoundValCr": 1988.4009999999998
+        },
+        {
+          "fund": "Fund 1Y",
+          "status": "Active",
+          "stakeCurrent": 0.0361,
+          "investedCostCr": 65.64080167,
+          "mtmCr": 65.64080167,
+          "realisedCr": 0.0,
+          "moic": 1.0,
+          "irr": null,
+          "lastRoundValCr": 25.78
+        }
+      ]
+    },
+    "rounds": [
+      {
+        "round": "Series A",
+        "date": "2015-04-22",
+        "primary": 4.7414322,
+        "preMoney": 12.6594,
+        "postMoney": 17.4008322
+      },
+      {
+        "round": "Series A1",
+        "date": "2016-02-22",
+        "primary": 9.052494,
+        "preMoney": 39.999756500000004,
+        "postMoney": 49.0522505
+      },
+      {
+        "round": "Series B",
+        "date": "2017-06-29",
+        "primary": 25.79871258,
+        "preMoney": 73.03968847099999,
+        "postMoney": 98.83840105099998
+      },
+      {
+        "round": "Series C",
+        "date": "2018-04-17",
+        "primary": 80.39741232600001,
+        "preMoney": 199.54980623900002,
+        "postMoney": 279.947218565
+      },
+      {
+        "round": "Series C2",
+        "date": "2019-09-26",
+        "primary": 46.149938656,
+        "preMoney": 319.462408482,
+        "postMoney": 365.612347138
+      },
+      {
+        "round": "Series D",
+        "date": "2021-01-27",
+        "primary": 114.99983663,
+        "preMoney": 516.76460689,
+        "postMoney": 631.76444352
+      },
+      {
+        "round": "Series E",
+        "date": "2023-02-22",
+        "primary": 445.403813316,
+        "preMoney": 1542.9975069739999,
+        "postMoney": 1988.40132029
+      }
+    ],
+    "totalPrimaryRaisedCr": 726.5436397,
+    "latestValuation": {
+      "round": "Series E",
+      "date": "2023-02-22",
+      "preMoney": 1542.9975069739999,
+      "postMoney": 1988.40132029
+    },
+    "capTable": [
+      {
+        "name": "Mandeep Manocha",
+        "group": "Founders",
+        "pct": 0.0744
+      },
+      {
+        "name": "Nakul Kumar",
+        "group": "Founders",
+        "pct": 0.0744
+      },
+      {
+        "name": "Amit Sethi",
+        "group": "Founders",
+        "pct": 0.0381
+      },
+      {
+        "name": "Bessemer (BVP)",
+        "group": "Investor",
+        "pct": 0.0788
+      },
+      {
+        "name": "Blume Ventures",
+        "group": "Investor",
+        "pct": 0.0475
+      },
+      {
+        "name": "M&S Partners",
+        "group": "Investor",
+        "pct": 0.0062
+      },
+      {
+        "name": "Shunwei",
+        "group": "Investor",
+        "pct": 0.0471
+      },
+      {
+        "name": "Vivek Khare",
+        "group": "Other",
+        "pct": 0.0005
+      },
+      {
+        "name": "Morningside (3C India)",
+        "group": "Investor",
+        "pct": 0.0491
+      },
+      {
+        "name": "AiHuiShou (AHS)",
+        "group": "Investor",
+        "pct": 0.0302
+      },
+      {
+        "name": "Sin Growth Partners",
+        "group": "Investor",
+        "pct": 0.0023
+      },
+      {
+        "name": "Trifecta Venture Debt",
+        "group": "Investor",
+        "pct": 0.0004
+      },
+      {
+        "name": "Olympus (AEP)",
+        "group": "Investor",
+        "pct": 0.1429
+      },
+      {
+        "name": "MIH / Prosus",
+        "group": "Investor",
+        "pct": 0.1137
+      },
+      {
+        "name": "NewQuest",
+        "group": "Investor",
+        "pct": 0.1901
+      },
+      {
+        "name": "Paramark / KB",
+        "group": "Investor",
+        "pct": 0.0314
+      },
+      {
+        "name": "Amazon",
+        "group": "Investor",
+        "pct": 0.0194
+      },
+      {
+        "name": "Subodh Garg",
+        "group": "Other",
+        "pct": 0.0005
+      },
+      {
+        "name": "ESOP pool",
+        "group": "ESOP",
+        "pct": 0.053
+      }
+    ],
+    "capTableTotalPct": 1.0,
+    "links": {
+      "capTable": "https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP",
+      "valuation": "https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP",
+      "roundWise": "https://drive.google.com/drive/folders/1FPv8GEhseyyfBqo8Miwk918rvMNyOX9y",
+      "investmentProfile": "https://drive.google.com/drive/folders/1Fs4N5NXuvB8zxnfsu-Z3FFvD6kytS_ZP"
+    }
+  },
+  "comps": {
+    "publicMarkets": {
+      "subject": {
+        "company": "Cashify",
+        "status": "Private",
+        "marketCap": 1980.0,
+        "revenue": 1719.0,
+        "revGrowth": 0.48,
+        "grossMargin": 0.1861547411,
+        "ebitdaMargin": 0.01512507272,
+        "mcRevenue": 1.151832461,
+        "mcEbitda": 76.15384615
+      },
+      "peers": [
+        {
+          "company": "Electronics Mart India",
+          "status": "Public",
+          "marketCap": 4642.0,
+          "revenue": 7183.0,
+          "revGrowth": 0.067,
+          "grossMargin": 0.1443686482,
+          "ebitdaMargin": 0.06097730753,
+          "mcRevenue": 0.6462480858,
+          "mcEbitda": 10.59817352
+        },
+        {
+          "company": "Aditya Vision",
+          "status": "Public",
+          "marketCap": 7089.0,
+          "revenue": 2672.0,
+          "revGrowth": 0.182,
+          "grossMargin": 0.1560628743,
+          "ebitdaMargin": 0.08532934132,
+          "mcRevenue": 2.653068862,
+          "mcEbitda": 31.09210526
+        },
+        {
+          "company": "GNG Electronics",
+          "status": "Public",
+          "marketCap": 4931.0,
+          "revenue": 1891.0,
+          "revGrowth": 0.34,
+          "grossMargin": 0.2199894236,
+          "ebitdaMargin": 0.1062929667,
+          "mcRevenue": 2.607615019,
+          "mcEbitda": 24.53233831
+        }
+      ],
+      "stats": {
+        "mean": {
+          "mcRevenue": 1.968977322,
+          "mcEbitda": 22.0742057
+        },
+        "median": {
+          "mcRevenue": 2.607615019,
+          "mcEbitda": 24.53233831
+        },
+        "high": {
+          "mcRevenue": 2.653068862,
+          "mcEbitda": 31.09210526
+        },
+        "low": {
+          "mcRevenue": 0.6462480858,
+          "mcEbitda": 10.59817352
+        }
+      }
+    },
+    "conCalls": [
+      {
+        "company": "ATRenew Inc.",
+        "calls": [
+          {
+            "company": "ATRenew Inc.",
+            "date": "2026-05-19",
+            "guidance": "UPDATED Q2 2026 guidance to RMB 6.24-6.34B revenue (25-27% YoY growth). INCREASED full-year 2026 growth expectations and EXPECT meaningful margin improvement.",
+            "growthDrivers": "(1) 1P product revenue growth of 34.4% YoY, driven by compliant refurbishment (76.1% growth) and 1P-to-C retail (150% growth); (2) Multi-category recycling GMV up 81.5% YoY; (3) Government trade-in support and brand platform investments; (4) PJT Marketplace registered merchants nearly doubled YoY to 2M.",
+            "headwinds": "New device shipments in China declined approximately 4% YoY, creating headwinds for the broader market despite ATRenew's strong performance in secondhand electronics.",
+            "kpis": "Key KPIs: (1) Revenue growth 32.4% YoY to RMB 6.16B; (2) 1P product revenue +34.4%, 3P service revenue +10.4%; (3) Non-GAAP operating profit +70.2% to RMB 190M with 3.1% margin; (4) 1P-to-C retail 45.1% of product revenue; (5) PJT Marketplace merchants nearly doubled to 2M; (6) Recycling GMV +81.5%; (7) Face-to-face fulfillment 80%; (8) 3P take rate 4.92%; (9) 1P gross margin 15.9%. LPD (Latest Period Data): Q1 2026 ended March 31, 2026."
+          },
+          {
+            "company": "ATRenew Inc.",
+            "date": "2026-03-11",
+            "guidance": "UPDATED Q1 2026 guidance to RMB 5,860-5,960 million, representing 25.9%-28.1% YoY growth.",
+            "growthDrivers": "(1) 1P strategy with 30.7% net product revenue growth; (2) 1P to C retail revenue up 88% YoY to 41.7% of product revenue; (3) multi-category recycling GMV up 125.7% YoY; (4) export channels with 4 consecutive quarters of sequential growth; (5) government trade-in subsidies and rising new device prices.",
+            "headwinds": "B2C marketplace POP model faced challenges in 2025. Rising new device prices and memory cost pressures intensified competition. Competitive pricing and superior user experience became critical differentiators.",
+            "kpis": "Critical KPIs: (1) Q4 revenue RMB 6.25B (+29% YoY), non-GAAP operating profit RMB 180M (+38.1%); (2) Net product revenue RMB 5.83B (+30.7%), service revenue RMB 420M (+8.8%); (3) 1P gross margin 13.7% (+120bps), marketplace take rate 4.79%; (4) 1P-to-C retail 41.7% of product revenue (+1,270bps); (5) Fulfillment expense ratio 7.7% (-40bps); (6) PJT Marketplace users 1.66M+. LPD (Latest Period Data): Q4 2025."
+          }
+        ]
+      },
+      {
+        "company": "Watches of Switzerland Group PLC",
+        "calls": [
+          {
+            "company": "Watches of Switzerland Group PLC",
+            "date": "2025-12-04",
+            "guidance": "MAINTAINED full year guidance of 6% to 10% revenue growth at constant currency with adjusted EBIT margin flat to 100 basis points down.",
+            "growthDrivers": "(1) Showroom investment with GBP 37M spent and 8 projects completed; (2) Certified Preowned, now #2 brand in U.K. and U.S.; (3) E-commerce up 17% in constant currency; (4) Luxury branded jewelry, primarily Roberto Coin with 16% wholesale growth; (5) Client-centric excellence with Net Promoter Score of 94.5%.",
+            "headwinds": "U.S. tariffs reduced brand margins and caused product margin contraction of 90 basis points. Adverse product mix impacted profitability. U.K. economic slowdown and budget-related taxation concerns pressured consumer spending, though impact remained manageable.",
+            "kpis": "Critical KPIs: (1) Revenue GBP 845M (+10% constant currency); (2) EBIT GBP 69M (+6%); (3) Free cash flow GBP 48M (+71%); (4) ROCE 17.3% (+80bps); (5) Adjusted EBITDA GBP 91M (+4%); (6) Adjusted EPS 19.6p (+8%); (7) Net debt/EBITDA 0.6x; (8) U.S. retail +21%; (9) E-commerce +17%; (10) Roberto Coin wholesale +16%. LPD (Latest Period Data): H1 FY2026 ended October 2025."
+          },
+          {
+            "company": "Watches of Switzerland Group PLC",
+            "date": "2025-07-03",
+            "guidance": "UPDATED guidance for FY '26: revenue growth of 6-10% in constant currency, adjusted EBIT margin flat to down 100 basis points, and capital expenditure of GBP 65-75 million.",
+            "growthDrivers": "(1) Showroom investments and renovations offering attractive returns; (2) Strategic acquisitions, particularly in U.S. jewelry; (3) E-commerce expansion in U.S.; (4) Roberto Coin branded jewelry growth; (5) Certified pre-owned expansion; (6) New product launches from brands with improved marketing support.",
+            "headwinds": "Key headwinds include: (1) U.S. tariffs at 10% on Swiss imports causing mid-single-digit price increases and margin compression from brand partners; (2) U.K. market volatility from prior high price increases impacting consumer sentiment; (3) Asian market declines in Hong Kong and China; (4) uncertain macroeconomic environment affecting tariff developments.",
+            "kpis": "Critical KPIs: (1) FY25 sales GBP1.652B (+8% constant currency); (2) Adjusted EBIT GBP150M (+12%, 9.1% margin); (3) Adjusted EPS 41.6p (+9%); (4) Free cash flow GBP98M; (5) ROCE 19%; (6) U.S. sales $1B+ milestone; (7) U.S. CAGR 24.7% (FY20-25); (8) U.K. CAGR 5.1% (calendar 19-24); (9) Group CAGR 13.5% (FY19-25); (10) EBIT CAGR 19.3% (FY19-25). LPD: Last Period Data unavailable in document."
+          }
+        ]
+      },
+      {
+        "company": "Electronics Mart India Limited",
+        "calls": [
+          {
+            "company": "Electronics Mart India Limited",
+            "date": "2025-11-10",
+            "guidance": "UPDATED FY26 revenue guidance from 15% to low double-digit growth; margins expected to improve in Q3 versus prior quarters.",
+            "growthDrivers": "Growth drivers include (1) reduced interest rates and GST rates boosting disposable income, (2) AI-enabled mobile devices driving upgrades and ASP growth, (3) unpenetrated categories offering expansion potential, (4) new store maturation contributing margins.",
+            "headwinds": "Headwinds include (1) GST announcement causing purchase deferment, (2) 75 new stores in early stabilization stages pressuring margins, (3) weak summer season impacting AC sales, (4) INR 200+ crores excess AC inventory requiring liquidation.",
+            "kpis": "Critical KPIs: (1) Q2 Revenue: INR 1,591 crores; H1 Revenue: INR 3,330 crores. (2) Q2 EBITDA: INR 82 crores (5.1% margin); H1 EBITDA: INR 192 crores (5.8% margin). (3) Q2 PAT: INR 16 crores; H1 PAT: INR 38 crores. (4) SSG: 11.4% (Q2). (5) RoCE/RoE: 9.8%/4.8% (H1). (6) Working Capital Days: 76. (7) Operating Cash Flow: INR 209 crores."
+          },
+          {
+            "company": "Electronics Mart India Limited",
+            "date": "2025-08-05",
+            "guidance": "MAINTAINED 15%-plus revenue growth guidance for FY '26 and UPDATED store expansion to 25-30 new stores in FY '26, with expectations for higher double-digit growth in Q2 and EBITDA margins sustaining at 6%.",
+            "growthDrivers": "Growth drivers include (1) AI-enabled mobile devices and technology upgrades, (2) increased consumer disposable income from tax relief (INR 1 lakh crore), (3) premiumization trend and premium segment focus, (4) strong OEM partnerships, (5) festive season demand, (6) new store maturation improving unit economics.",
+            "headwinds": "Primary headwinds: (1) unseasonal rainfall in April-May reducing AC/cooler demand by 50% in Telangana and 148% in Andhra Pradesh, (2) excess AC inventory of INR 250 crores, (3) margin pressure from 44 new store additions with fixed cost absorption lag, (4) slowdown in real estate market impacting demand.",
+            "kpis": "Critical KPIs: (1) Revenue INR 1,739 crores, (2) EBITDA INR 110 crores (6.3% margin), (3) PAT INR 22 crores, (4) Like-to-like sales -18%, (5) ROCE 13.4%, ROE 7.7%, (6) Working capital 60 days, (7) Store count 208 (197 MBO, 11 EBO), (8) Large appliances 48% of sales, mobile phones 40%. LPD (Last Period Data): Q1 FY'25 had stronger EBITDA margins driven by heat waves; North cluster EBITDA margin was 2.6% vs 3.6% current quarter."
+          }
+        ]
+      },
+      {
+        "company": "Aditya Vision Limited",
+        "calls": [
+          {
+            "company": "Aditya Vision Limited",
+            "date": "2025-11-07",
+            "guidance": "MAINTAINED EBITDA margin guidance of 8-10%; expects strong Q3 and Q4 performance; planning to add 30-35 stores in FY '26.",
+            "growthDrivers": "Major drivers: (1) GST price cuts improving affordability in TVs, mobiles, washing machines; (2) INR 13,000 crores liquidity from Mukhyamantri Mahila Rojgan Yojana; (3) 30-35% salary hikes from 8th pay commission; (4) free electricity scheme lowering household outflows; (5) festive season demand.",
+            "headwinds": "Headwinds: (1) extended monsoons with above-normal rainfall (UP 870mm, Bihar 990mm, Jharkhand 785mm); (2) below-seasonal temperatures reducing cooling product demand; (3) subdued demand during Shradh period; (4) delayed GST slab implementation causing customer purchase delays in August-September.",
+            "kpis": "Critical KPIs: (1) Q2 revenue +22% YoY to INR 458 crores; (2) PAT +4.2% YoY to INR 13 crores; (3) Gross margin 15.1%; (4) EBITDA INR 35 crores, 7.6% margin; (5) SSSG Q2 12%, H1 2%; (6) Regional: Bihar 77%, Jharkhand 11%, UP 12%; (7) Store count 188 (+9 Q2); (8) Inventory INR 676 crores. LPD: Last Period Data unavailable in document."
+          },
+          {
+            "company": "Aditya Vision Limited",
+            "date": "2025-08-01",
+            "guidance": "MAINTAINED EBITDA margins at 9.5% and gross margins IMPROVED from 15.22% to 15.33% YoY. GUIDED to add 25-30 new stores in FY'26 to cross 200-plus store milestone by year-end.",
+            "growthDrivers": "(1) Rising rural incomes and bumper crop harvests across Bihar, Jharkhand, UP; (2) Union Budget 2025 personal tax relief releasing INR 1 lakh crore to consumers; (3) Bihar's 125-unit free electricity scheme boosting consumer durables demand; (4) India's 6.4% FY'26 GDP growth with public CapEx momentum and improving consumer confidence.",
+            "headwinds": "Unprecedented weather headwinds: (1) Excessive rainfall (UP: 198mm vs 145mm avg; Bihar: 223mm vs 157mm avg; Jharkhand: 215mm vs 155mm avg); (2) Abnormally low temperatures (UP: 35.1°C vs 37.6°C avg; Bihar: 34.8°C vs 37°C avg); (3) Cooling product demand plummeted with 15-30% primary sales decline across leading OEMs; (4) Sharp channel inventory buildup at summer season start.",
+            "kpis": "Critical KPIs: (1) Revenue INR 940 crores (+6% YoY), (2) EBITDA INR 90 crores (9.5% margin), (3) PAT INR 55 crores (+3.9%), (4) Gross margin 15.3% (+10bps), (5) Same-store sales growth -4%, (6) Store count 179 (113 Bihar, 30 Jharkhand, 36 UP), (7) Revenue mix: Bihar 76%, UP 13%, Jharkhand 11%, (8) Inventory INR 548 crores (-INR 150 crores), (9) Short-term borrowings INR 115 crores (-INR 163 crores). LPD: Last Profit Date not mentioned in document."
+          }
+        ]
+      },
+      {
+        "company": "Newjaisa Technologies Limited",
+        "calls": [
+          {
+            "company": "Newjaisa Technologies Limited",
+            "date": "2024-11-20",
+            "guidance": "MAINTAINED guidance for 20-30% YoY growth, expecting to sustain similar momentum with 30-40% annual growth historically.",
+            "growthDrivers": "(1) Channel diversification across e-commerce, owned website, and offline; (2) Direct corporate procurement increasing from 25% to 40%; (3) Educational institution partnerships; (4) Product line expansion including MacBooks and tablets; (5) NBFC partnership enabling SME financing options.",
+            "headwinds": "Increased competition from smaller players on e-commerce platforms as refurbished products gain mainstream recognition; operational challenges from ERP upgrades impacting laptop production; working capital pressure from bulk corporate sourcing requiring 15-20 days inventory holding.",
+            "kpis": "Key KPIs: (1) Revenue: INR 32 crores H1 (20-30% YoY growth). (2) Units sold: 25,350. (3) Gross margins: sustained at required levels. (4) Headcount: flat at 400 with improved per-unit efficiency. (5) Daily production: INR 1 crore+ Diwali sales. (6) Operational productivity: 0.5-0.75 units/employee/day. (7) Fixed asset capacity utilization: 60%. (8) Employee utilization: 80-90%. (9) ASP: INR 13,000 blended H1."
+          },
+          {
+            "company": "Newjaisa Technologies Ltd.",
+            "date": "2023-11-24",
+            "guidance": "The company does not provide forward-looking guidance as a policy.",
+            "growthDrivers": "Major growth drivers include huge uptick in market demand and COVID-led increase in work from home culture driving demand for refurbished products.",
+            "headwinds": "The company faces government regulation challenges for importing used assets into India and operates an asset-heavy business model.",
+            "kpis": "Key KPIs include 86% revenue growth, 92% gross margin improvement, EBITDA of INR 4.06 crores, net profit of INR 2.90 crores, EPS of INR 2.45, 75,000+ units sold, and employee base growth from 250 to 555."
+          }
+        ]
+      },
+      {
+        "company": "GNG Electronics Limited",
+        "calls": [
+          {
+            "company": "GNG Electronics Limited",
+            "date": null,
+            "guidance": "MAINTAINED 25% revenue growth guidance with PAT growth of 50 basis points and 200 basis points margin expansion.",
+            "growthDrivers": "Major drivers: (1) AI-driven component shortages creating 55-60M unit demand gap for new PCs, (2) refurbished PC value proposition as economical alternative, (3) expanded distribution to 46 countries and 4,895 touchpoints, (4) consumer financing programs at INR 1,000/month EMI, (5) strategic partnerships with leading distributors.",
+            "headwinds": "Headwinds include: (1) component supply constraints with CPU lead times extending to six months, (2) working capital intensity requiring elevated inventory of INR 743 crores, (3) increased freight costs, (4) elevated debtor days at 40-45 days to support new distributor partnerships, (5) geopolitical risks in UAE operations.",
+            "kpis": "FY26 KPIs: Revenue INR 1,891.1 crores (+34% YoY), PAT INR 132 crores (+91%), EBITDA margin 10.6% (+166 bps), PAT margin 7% (+209 bps). Units 727,000 (+23%), ASP INR 26,000, employees 2,100+, 46 countries, 4,895 touchpoints, net debt INR 300 crores. FY27 guidance: 25% revenue growth, 50 bps PAT margin expansion, 11.5% EBITDA margin. LPD (Last Period Data): FY25 revenue INR 1,410 crores, PAT INR 69 crores, EBITDA margin 8.9%, PAT margin 4.9%."
+          }
+        ]
+      }
+    ]
+  },
+  "news": {
+    "items": [
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "Boult joins forces with Cashify for retail expansion",
+        "url": "https://click.pstmrk.it/3s/in.fashionnetwork.com%2Fnews%2FBoult-joins-forces-with-cashify-for-retail-expansion%2C1683882.html/AdUd/VOW5AQ/AQ/af7e2804-a62e-40a0-b60f-ca1dd1ba8532/4/akdtGUL-G8",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      },
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "Surge in demand for refurbished mobiles",
+        "url": "https://brandequity.economictimes.indiatimes.com/news/research/surge-in-demand-for-refurbished-smartphones-report/113652072",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      },
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "GNG Electronics files DRHP to raise Rs. 825 cr",
+        "url": "https://www.livemint.com/market/ipo/gng-electronics-eyes-ipo-route-to-raise-825-crore-files-drhp-with-sebi-11734251122603.html",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      }
+    ],
+    "industry": [
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "Boult joins forces with Cashify for retail expansion",
+        "url": "https://click.pstmrk.it/3s/in.fashionnetwork.com%2Fnews%2FBoult-joins-forces-with-cashify-for-retail-expansion%2C1683882.html/AdUd/VOW5AQ/AQ/af7e2804-a62e-40a0-b60f-ca1dd1ba8532/4/akdtGUL-G8",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      },
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "Surge in demand for refurbished mobiles",
+        "url": "https://brandequity.economictimes.indiatimes.com/news/research/surge-in-demand-for-refurbished-smartphones-report/113652072",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      },
+      {
+        "date": null,
+        "type": "",
+        "company": "",
+        "theme": "",
+        "source": "",
+        "headline": "GNG Electronics files DRHP to raise Rs. 825 cr",
+        "url": "https://www.livemint.com/market/ipo/gng-electronics-eyes-ipo-route-to-raise-825-crore-files-drhp-with-sebi-11734251122603.html",
+        "summary": "",
+        "sentiment": "",
+        "relevance": ""
+      }
+    ],
+    "companies": []
+  },
+  "specialProjects": [
+    {
+      "project": "Cashify Deep Dive",
+      "description": "Deep dive into the business, competitors, exit thinking etc. of the company to have a document for internal members as well as prospective investors to have a complete understanding of the company",
+      "endGoal": "Improve understanding of the company",
+      "status": "Completed"
+    },
+    {
+      "project": "Peers Funnel Comparison",
+      "description": "We analysed the funnel of competitors to identify features that can be imbibed by the company and areas of improvement with the objective of improving eStore performance",
+      "endGoal": "Improve eStore Performance",
+      "status": "Completed"
+    },
+    {
+      "project": "Introduction to Nitin",
+      "description": "Consumer Wazir Nitin had multiple in-depth discussions with the company and the company implemented few of his suggestions",
+      "endGoal": "Improve eStore Performance",
+      "status": "Completed"
+    },
+    {
+      "project": "Improve sourcing costs & Benchmark refurbishing  player",
+      "description": "Cashify sourcing costs are higher than the industry and need to be evaluated: Exercise of  NewJaisa to understand how are they more profitable",
+      "endGoal": "Improve gross margin",
+      "status": "Completed"
+    },
+    {
+      "project": "Improve retail channel Costs",
+      "description": "",
+      "endGoal": "Margin Improvement",
+      "status": "Completed"
+    },
+    {
+      "project": "Electronics Mart RHP Analysis",
+      "description": "",
+      "endGoal": "Learnings and Cost Structures Comparison",
+      "status": "Completed"
+    },
+    {
+      "project": "Laptop Sourcing",
+      "description": "Help with corporate connects to source used laptopl",
+      "endGoal": "Increase sourcing to increase revenues",
+      "status": "WIP"
+    }
+  ],
+  "meetings": {
+    "source": "Granola",
+    "items": [
+      {
+        "title": "{Zoom} Catchup: Arpit <> Dhaghash",
+        "date": "2026-06-30",
+        "lastEdited": "2026-07-06T09:29:59.936Z",
+        "url": "https://notes.granola.ai/d/8dee232b-c43a-4d45-9f93-62d60c820ce2",
+        "source": "Granola",
+        "sections": [
+          "Automation: Cache File Dashboard",
+          "Portfolio Updates",
+          "Next Steps"
+        ],
+        "bullets": [
+          "Building a “cache file” for portfolio companies: single-page view pulling from Google Drive (SSOT folder)",
+          "Shows P&L vs. budget and internal model, YTD/TTM toggle, units by channel, valuation, raise history, competitors, concall highlights, news",
+          "Concall summaries auto-populated; meeting notes via Notion API (still integrating with GitHub)",
+          "Solves the growth huddle prep problem: previously manual updates every quarter for Vikram and Ashish",
+          "Cashify is the first build; plan to replicate across all portfolio companies once done"
+        ],
+        "attendees": [
+          "Dhagash",
+          "Arpit"
+        ]
+      },
+      {
+        "title": "{Zoom} Catchup: Arpit <> Dhaghash",
+        "date": "2026-06-16",
+        "lastEdited": "2026-06-17T08:04:52.806Z",
+        "url": "https://notes.granola.ai/d/0a7e5b12-52d3-42e2-a9c8-46995a22d567",
+        "source": "Granola",
+        "sections": [
+          "Growth Hurdle Prep",
+          "Portfolio Financial Models (FY27/28)",
+          "Cashify: Flipkart CBO Perspective",
+          "KRA Shift and Portfolio Impact Projects"
+        ],
+        "bullets": [
+          "Priya adding Dhagash to the growth hurdle (Thursday, 45-min block)",
+          "Will cover Battery Smart, Cashify, and Euler",
+          "Arpit will be on the road from Delhi",
+          "Euler: 40% and 35% revenue growth modeled for FY27/28",
+          "Revenue mix is shifting; push whatever is selling rather than applying a fixed view"
+        ],
+        "attendees": [
+          "Dhagash",
+          "Arpit"
+        ]
+      },
+      {
+        "title": "Cashify stock investment — case building and collateral prep",
+        "date": "2026-06-01",
+        "lastEdited": "2026-06-02T08:42:22.855Z",
+        "url": "https://notes.granola.ai/d/41c20c71-d577-4962-ad89-a4731e6d7c5e",
+        "source": "Granola",
+        "sections": [
+          "Health Check Experience",
+          "Cashify Investment Opportunity",
+          "Documentation Requirements",
+          "Next Steps"
+        ],
+        "bullets": [
+          "Completed comprehensive health assessment at premium facility",
+          "Met with Hisham (lab manager) to understand capacity and operations",
+          "Session ran 11:45 AM until evening return",
+          "Only blood vision test scheduled separately for home",
+          "All other tests completed on-site"
+        ],
+        "attendees": [
+          "Dhagash"
+        ]
+      },
+      {
+        "title": "Blume <> Cashify | Weekly B2B Laptop Procurement Cadence",
+        "date": "2026-05-14",
+        "lastEdited": "2026-05-15T07:44:30.594Z",
+        "url": "https://notes.granola.ai/d/07b9bf2e-5180-4409-8b17-984a60fdd25e",
+        "source": "Granola",
+        "sections": [
+          "B2B Laptop Procurement Pipeline Update",
+          "Target Company Status & Outreach",
+          "Strategic Focus on Apple Devices",
+          "Government & Enterprise Challenges"
+        ],
+        "bullets": [
+          "Essential mandate: OEM partnerships only for laptop disposal",
+          "Found in grey market triggered compliance requirement",
+          "All disposals now through Williams exclusively",
+          "Fresh Words meeting scheduled Tuesday",
+          "500+ layoffs in recent weeks"
+        ],
+        "attendees": [
+          "Dhagash",
+          "Gautham S",
+          "Adarsh Gautam"
+        ]
+      }
+    ]
+  }
+}

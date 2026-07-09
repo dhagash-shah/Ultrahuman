@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cashify — Growth Huddle</title>
+<meta name="description" content="Cashify Growth Huddle: MIS dashboard, capital & cap table, comps, special projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#13201D; --ink-2:#37433F; --mute:#6C7B75;
+  --paper:#EEF1EF; --card:#FFFFFF; --line:#DCE3E0; --line-2:#E8ECEA;
+  --teal:#0E7C66; --teal-12:rgba(14,124,102,.12); --teal-20:rgba(14,124,102,.20);
+  --clay:#B0532C; --clay-12:rgba(176,83,44,.12); --amber:#9A7B16;
+  --shadow:0 1px 2px rgba(19,32,29,.04), 0 8px 24px rgba(19,32,29,.05);
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:15px; line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+.wrap{max-width:1080px; margin:0 auto; padding:0 22px}
+
+/* masthead */
+.mast{padding:34px 0 0; border-bottom:1px solid var(--line)}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--teal); font-weight:500; margin:0 0 10px}
+.month{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:clamp(34px,6vw,54px);
+  line-height:.95; letter-spacing:-.02em; margin:0; color:var(--ink)}
+.subtitle{color:var(--mute); margin:8px 0 0; font-size:14px; max-width:46ch}
+
+/* tabs */
+.tabs{display:flex; gap:4px; margin-top:24px; flex-wrap:wrap}
+.tabs button{appearance:none; border:0; background:transparent; cursor:pointer;
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.02em;
+  padding:12px 16px; color:var(--mute); border-bottom:2px solid transparent; transition:all .18s ease}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--teal); font-weight:500}
+.tabs button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+
+/* basis toggle */
+.toggle{display:inline-flex; background:var(--card); border:1px solid var(--line);
+  border-radius:999px; padding:4px; box-shadow:var(--shadow)}
+.toggle button{appearance:none; border:0; background:transparent; cursor:pointer;
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.02em;
+  padding:8px 16px; border-radius:999px; color:var(--mute); transition:all .18s ease}
+.toggle button[aria-pressed="true"]{background:var(--ink); color:#fff}
+.toggle button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+
+/* modules */
+.module{display:none}
+.module.active{display:block; animation:fade .28s ease}
+section{padding:32px 0; border-bottom:1px solid var(--line-2)}
+section:last-child{border-bottom:0}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin:0 0 18px; flex-wrap:wrap}
+.sec-head h2{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:20px; letter-spacing:-.01em; margin:0}
+.sec-head .tag{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--mute);
+  letter-spacing:.12em; text-transform:uppercase}
+.mod-head{padding:30px 0 6px}
+.mod-head h2{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:26px; letter-spacing:-.02em; margin:0}
+.mod-head p{color:var(--mute); margin:6px 0 0; font-size:14px; max-width:62ch}
+
+/* hero */
+.hero{background:var(--ink); color:#EAEFEC; border-radius:var(--r); padding:30px 30px 34px; box-shadow:var(--shadow); margin-top:24px}
+.hero .k{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:#7FB3A4; margin:0 0 14px}
+.hero .lead{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:clamp(22px,3.4vw,30px); line-height:1.15; letter-spacing:-.01em; margin:0 0 22px; max-width:24ch}
+.hero .lead em{font-style:normal; color:#46D6AE}
+.decomp{display:grid; gap:14px; max-width:560px}
+.bar-row{display:grid; grid-template-columns:78px 1fr 92px; align-items:center; gap:14px}
+.bar-row .lab{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:#9FB8B0}
+.bar-track{height:14px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden}
+.bar-fill{height:100%; border-radius:999px; transform-origin:left; transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.bar-fill.vol{background:linear-gradient(90deg,#0E7C66,#46D6AE)}
+.bar-fill.price{background:#6C7B75}
+.bar-row .val{font-family:"IBM Plex Mono",monospace; font-size:15px; text-align:right; color:#EAEFEC}
+.hero .foot{margin:22px 0 0; color:#9FB8B0; font-size:13px; max-width:60ch}
+.hero .foot b{color:#EAEFEC; font-weight:500}
+
+/* KPI strip */
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+.kpi{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:18px 18px 16px}
+.kpi .name{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin:0 0 10px}
+.kpi .big{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:27px; letter-spacing:-.02em; margin:0}
+.kpi .sub{color:var(--mute); font-size:12.5px; margin:6px 0 0}
+.kpi .row{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
+
+/* chips */
+.chip{font-family:"IBM Plex Mono",monospace; font-size:11.5px; padding:3px 8px; border-radius:7px; white-space:nowrap; border:1px solid transparent}
+.chip .ch-lab{color:var(--mute); margin-right:6px}
+.chip.pos{background:var(--teal-12); color:var(--teal)}
+.chip.neg{background:var(--clay-12); color:var(--clay)}
+.chip.flat{background:#eef1ef; color:var(--ink-2); border-color:var(--line)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--card)}
+table{border-collapse:collapse; width:100%; min-width:560px}
+thead th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); font-weight:500; text-align:right; padding:13px 16px; border-bottom:1px solid var(--line); white-space:nowrap; background:#fbfcfb}
+thead th:first-child{text-align:left}
+tbody td{padding:11px 16px; border-bottom:1px solid var(--line-2); text-align:right; white-space:nowrap}
+tbody td:first-child{text-align:left; font-weight:500}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.dim td{color:var(--mute)}
+tbody tr.total td{font-weight:600; background:#fbfcfb}
+tbody tr.accent td{background:var(--teal-12)}
+tbody tr.accent td:first-child{color:var(--teal)}
+thead th.col-cur{color:var(--ink); background:var(--teal-12); border-bottom-color:var(--teal-20)}
+tbody td.col-cur{background:var(--teal-12); font-weight:600; color:var(--ink)}
+tbody tr:nth-child(even) td{background:#fafbfb}
+tbody tr:nth-child(even) td.col-cur{background:rgba(14,124,102,.16)}
+tbody td.dpos{color:var(--teal); background:rgba(14,124,102,.09); font-weight:500}
+tbody td.dneg{color:var(--clay); background:rgba(176,83,44,.09); font-weight:500}
+tbody td.dflat{color:var(--mute)}
+tbody tr.grp td:first-child{font-weight:600}
+tbody tr.subrow td:first-child{padding-left:30px; font-weight:400; color:var(--mute); font-style:italic}
+tbody tr.subrow td{color:var(--mute); background:#fcfdfd}
+tbody tr.total td{font-weight:700; background:#eef3f1; border-top:2px solid var(--line)}
+.col-note{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--mute); font-weight:400}
+
+/* file links */
+.filelinks{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.filelinks a{display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--teal);
+  border:1px solid var(--teal-20); background:var(--teal-12); padding:7px 13px; border-radius:9px; transition:all .15s ease}
+.filelinks a:hover{background:var(--teal-20)}
+.filelinks a::before{content:"↗"; font-size:13px}
+
+/* segmental */
+.seg-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:22px; align-items:start}
+.chart-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:18px}
+.chart-card h3{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin:0 0 14px; font-weight:500}
+
+/* refurb / stat cards */
+.cards-2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.cards-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+.rf{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:20px; position:relative; overflow:hidden}
+.rf::after{content:""; position:absolute; inset:0 0 auto auto; width:120px; height:120px; background:radial-gradient(circle at top right,var(--teal-12),transparent 70%)}
+.rf .name{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin:0 0 8px}
+.rf .big{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:30px; letter-spacing:-.02em; margin:0}
+.rf .sub{color:var(--mute); font-size:13px; margin:6px 0 0}
+.rf .row{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; position:relative; z-index:1}
+
+/* cap table bars */
+.cap-list{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:8px 4px}
+.cap-row{display:grid; grid-template-columns:200px 1fr 64px; align-items:center; gap:14px; padding:8px 18px}
+.cap-row .cn{font-size:14px}
+.cap-row.structural .cn{font-weight:600}
+.cap-row.accent{background:var(--teal-12); border-radius:8px}
+.cap-row.accent .cn{color:var(--teal); font-weight:600}
+.cap-row.total{border-top:1px solid var(--line); margin-top:4px}
+.cap-row.total .cn{font-weight:700}
+.cap-track{height:10px; background:#eef1ef; border-radius:999px; overflow:hidden}
+.cap-fill{height:100%; background:linear-gradient(90deg,#0E7C66,#46D6AE); border-radius:999px}
+.cap-row.structural .cap-fill{background:#6C7B75}
+.cap-row .pv{font-family:"IBM Plex Mono",monospace; font-size:13px; text-align:right}
+
+/* con-call cards */
+.cc-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.cc{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:20px 22px}
+.cc .cc-co{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:16px; margin:0}
+.cc .cc-date{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--teal); letter-spacing:.04em; margin:2px 0 0}
+.cc .cc-call{border-top:1px solid var(--line-2); margin-top:14px; padding-top:14px}
+.cc .cc-call:first-of-type{border-top:0; margin-top:10px; padding-top:0}
+.cc .ins-lab{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin:10px 0 3px}
+.cc .ins-txt{font-size:13px; color:var(--ink-2); margin:0; line-height:1.45}
+
+/* news / meetings */
+.news-grid,.meet-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.news-card,.meet-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:18px 20px}
+.news-meta,.meet-meta{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:9px}
+.news-meta span,.meet-meta span{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute)}
+.news-meta .src,.meet-meta .src{color:var(--teal)}
+.news-title,.meet-title{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:15px; line-height:1.25; margin:0}
+.news-title a,.meet-title a{color:var(--ink); text-decoration:none}
+.news-title a:hover,.meet-title a:hover{color:var(--teal)}
+.news-summary,.meet-summary{color:var(--ink-2); font-size:13px; line-height:1.45; margin:8px 0 0}
+.meet-summary{padding-left:18px}
+.meet-summary li{margin:4px 0}
+.news-tags,.meet-tags{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px}
+.news-empty,.meet-empty{color:var(--mute); font-size:13px; padding:18px 20px; background:var(--card); border:1px dashed var(--line); border-radius:var(--r)}
+
+/* special projects */
+.sp-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.sp{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:18px 20px}
+.sp .sp-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+.sp .sp-name{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:15px; margin:0}
+.sp .sp-desc{color:var(--ink-2); font-size:13px; margin:8px 0 0; line-height:1.45}
+.sp .sp-goal{color:var(--mute); font-size:12px; margin:10px 0 0}
+.sp .sp-goal b{color:var(--ink-2); font-weight:500}
+.badge{font-family:"IBM Plex Mono",monospace; font-size:10.5px; padding:3px 9px; border-radius:999px; white-space:nowrap; border:1px solid transparent}
+.badge.done{background:var(--teal-12); color:var(--teal)}
+.badge.wip{background:rgba(154,123,22,.14); color:var(--amber)}
+.badge.other{background:#eef1ef; color:var(--ink-2); border-color:var(--line)}
+
+/* footer / states */
+footer{padding:30px 0 60px; color:var(--mute); font-size:12.5px}
+footer .mono{font-size:11.5px; letter-spacing:.04em}
+.state{padding:60px 22px; text-align:center; color:var(--mute); font-size:14px}
+
+/* responsive */
+@media (max-width:880px){
+  .kpis,.cards-4{grid-template-columns:repeat(2,1fr)}
+  .seg-grid,.cc-grid,.news-grid,.meet-grid,.sp-grid{grid-template-columns:1fr}
+  .cap-row{grid-template-columns:140px 1fr 56px}
+}
+@media (max-width:560px){
+  .cards-2{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:64px 1fr 76px; gap:10px}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+@keyframes fade{from{opacity:.35} to{opacity:1}}
+</style>
+</head>
+<body>
+  <header class="mast">
+    <div class="wrap">
+      <p class="eyebrow" id="eyebrow">Cashify · Growth Huddle · FY26</p>
+      <h1 class="month">Cashify</h1>
+      <p class="subtitle">Monthly growth huddle — MIS, capital structure, comparables and special projects.</p>
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Modules">
+        <button role="tab" data-tab="mis"      aria-selected="true">MIS Dashboard</button>
+        <button role="tab" data-tab="capital"  aria-selected="false">Capital &amp; Cap Table</button>
+        <button role="tab" data-tab="comps"    aria-selected="false">Comps</button>
+        <button role="tab" data-tab="news"     aria-selected="false">News</button>
+        <button role="tab" data-tab="meetings" aria-selected="false">Meetings</button>
+        <button role="tab" data-tab="projects" aria-selected="false">Special Projects</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <div class="state" id="state">Loading data…</div>
+
+    <!-- MIS DASHBOARD -->
+    <div class="module" id="mod-mis" role="tabpanel">
+      <div class="mod-head" style="display:flex; justify-content:space-between; align-items:flex-end; gap:18px; flex-wrap:wrap">
+        <div>
+          <h2 id="mis-title">MIS Dashboard</h2>
+          <p>Actuals vs LY, AOP and <b>Blume Model</b>. <span class="mono">[M] = Blume Model.</span></p>
+          <div class="filelinks" id="mis-links"></div>
+        </div>
+        <div class="toggle" role="group" aria-label="Comparison basis">
+          <button data-basis="month" aria-pressed="true">Month</button>
+          <button data-basis="ytd" aria-pressed="false">YTD</button>
+          <button data-basis="ttm" aria-pressed="false">TTM</button>
+        </div>
+      </div>
+      <div class="hero" id="hero"></div>
+      <section>
+        <div class="sec-head"><h2>Headline</h2><span class="tag" id="kpi-tag"></span></div>
+        <div class="kpis" id="kpis"></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Particulars</h2><span class="tag">P&amp;L · balance sheet</span></div>
+        <div class="tbl-wrap"><table id="part-tbl"></table></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Segmental</h2><span class="tag">revenue · gross profit · GM2%</span></div>
+        <div class="seg-grid">
+          <div class="chart-card">
+            <h3 id="seg-chart-title">Revenue by segment</h3>
+            <canvas id="segChart" height="240"></canvas>
+          </div>
+          <div class="tbl-wrap"><table id="seg-tbl"></table></div>
+        </div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Refurbished — Volume &amp; ASP</h2><span class="tag">units · ₹/device</span></div>
+        <div class="cards-2" id="refurb"></div>
+      </section>
+    </div>
+
+    <!-- CAPITAL & CAP TABLE -->
+    <div class="module" id="mod-capital" role="tabpanel">
+      <div class="mod-head">
+        <h2>Stake, Capital Raised &amp; Cap Table</h2>
+        <p>Primary capital raised and latest valuation, Blume's fund-wise position, and the full cap table.
+          <span class="mono">Money in ₹ Cr unless stated; stakes %, multiples x.</span></p>
+        <div class="filelinks" id="cap-links"></div>
+      </div>
+      <section>
+        <div class="cards-4" id="cap-kpis"></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Blume — Fund-wise Holding</h2><span class="tag">stake · cost · value · MOIC · ₹ Cr</span></div>
+        <div class="tbl-wrap"><table id="funds-tbl"></table></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Funding History</h2><span class="tag">round-wise · ₹ Cr · pre/post-money</span></div>
+        <div class="tbl-wrap"><table id="rounds-tbl"></table></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Cap Table</h2><span class="tag" id="cap-tag">diluted holding %</span></div>
+        <div class="cap-list" id="cap-list"></div>
+      </section>
+    </div>
+
+    <!-- COMPS -->
+    <div class="module" id="mod-comps" role="tabpanel">
+      <div class="mod-head">
+        <h2>Comps</h2>
+        <p>Public-market financials &amp; valuations against listed recommerce / electronics-retail peers, plus the latest earnings-call read-throughs. <span class="mono">₹ crore unless noted.</span></p>
+      </div>
+      <section>
+        <div class="sec-head"><h2>Public Markets</h2><span class="tag">trading comparables</span></div>
+        <div class="tbl-wrap"><table id="pm-tbl"></table></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Con Call Summary</h2><span class="tag">last 2 calls · key insights</span></div>
+        <div class="cc-grid" id="cc-grid"></div>
+      </section>
+    </div>
+
+    <!-- NEWS -->
+    <div class="module" id="mod-news" role="tabpanel">
+      <div class="mod-head">
+        <h2>Industry &amp; Company News</h2>
+        <p>Refurbished commerce industry updates and company-specific signals curated from the News Tracker tab.</p>
+      </div>
+      <section>
+        <div class="sec-head"><h2>Industry</h2><span class="tag">refurbished commerce</span></div>
+        <div class="news-grid" id="news-industry"></div>
+      </section>
+      <section>
+        <div class="sec-head"><h2>Companies</h2><span class="tag">Cashify · peers · adjacent players</span></div>
+        <div class="news-grid" id="news-companies"></div>
+      </section>
+    </div>
+
+    <!-- MEETINGS -->
+    <div class="module" id="mod-meetings" role="tabpanel">
+      <div class="mod-head">
+        <h2>Recent Meetings</h2>
+        <p>Latest Cashify meeting notes pulled from Granola, showing key discussion bullets and source links.</p>
+      </div>
+      <section>
+        <div class="sec-head"><h2>Latest Notes</h2><span class="tag">Granola · recent meetings</span></div>
+        <div class="meet-grid" id="meet-grid"></div>
+      </section>
+    </div>
+
+    <!-- SPECIAL PROJECTS -->
+    <div class="module" id="mod-projects" role="tabpanel">
+      <div class="mod-head">
+        <h2>Special Projects</h2>
+        <p>Initiatives run with / for the company — objective and status.</p>
+      </div>
+      <section>
+        <div class="sp-grid" id="sp-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="wrap"><p class="mono" id="foot"></p></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+(function () {
+  const inr = n => (n == null ? '—' : Number(n).toLocaleString('en-IN'));
+  const cr  = v => v == null ? '—' : '₹' + (Math.abs(v) >= 100
+        ? Math.round(v).toLocaleString('en-IN')
+        : v.toLocaleString('en-IN', {maximumFractionDigits:1})) + ' Cr';
+  const pct  = (v, dp=1) => v == null ? '—' : (v*100).toFixed(dp) + '%';
+  const mult = v => v == null ? '—' : v.toFixed(1) + 'x';
+  const safe = s => (s == null ? '' : String(s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])));
+  const attr = s => safe(s).replace(/"/g, '&quot;');
+  const clip = (s, n) => !s ? '' : (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);
+  function fmtMon(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? iso : d.toLocaleDateString('en-IN', {month:'short', year:'numeric'});
+  }
+  function fmtDate(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? (iso || '') : d.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+  }
+
+  fetch('./data.json', {cache:'no-store'})
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(init)
+    .catch(err => {
+      document.getElementById('state').textContent =
+        'Could not load data.json (' + err.message + '). Run build_data.py first.';
+    });
+
+  function init(D) {
+    document.getElementById('state').style.display = 'none';
+    renderFooter(D);
+    if (D.mis)             MIS.mount(D.mis);
+    if (D.capital)         renderCapital(D.capital);
+    if (D.comps)           renderComps(D.comps);
+    if (D.news)            renderNews(D.news);
+    if (D.meetings)        renderMeetings(D.meetings);
+    if (D.specialProjects) renderProjects(D.specialProjects);
+
+    const tabs = document.querySelectorAll('#tabs button');
+    const show = id => {
+      tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+      document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+      document.getElementById('mod-' + id).classList.add('active');
+      if (id === 'mis') MIS.refreshChart();
+    };
+    tabs.forEach(b => b.addEventListener('click', () => show(b.dataset.tab)));
+    show('mis');
+  }
+
+  /* ── MEETINGS ───────────────────────────────────────────────────────── */
+  function renderMeetings(M) {
+    const rows = (M.items || []).slice(0, 6);
+    document.getElementById('meet-grid').innerHTML = rows.length ? rows.map(m => {
+      const title = m.url
+        ? `<a href="${attr(m.url)}" target="_blank" rel="noopener">${safe(m.title)}</a>`
+        : safe(m.title);
+      const bullets = (m.bullets || []).slice(0, 4)
+        .map(b => `<li>${clip(safe(b),180)}</li>`).join('');
+      const tags = (m.sections || []).slice(0, 3)
+        .map(s => `<span class="chip flat">${safe(s)}</span>`).join('');
+      return `<article class="meet-card">
+        <div class="meet-meta">
+          ${m.date ? `<span>${fmtDate(m.date)}</span>` : ''}
+          <span class="src">${safe(m.source || 'Granola')}</span>
+        </div>
+        <h3 class="meet-title">${title}</h3>
+        ${bullets ? `<ul class="meet-summary">${bullets}</ul>` : ''}
+        ${tags ? `<div class="meet-tags">${tags}</div>` : ''}
+      </article>`;
+    }).join('') : `<div class="meet-empty">No recent meetings pulled from Granola yet.</div>`;
+  }
+
+  /* ── NEWS ───────────────────────────────────────────────────────────── */
+  function renderNews(N) {
+    const card = item => {
+      const tags = [
+        item.theme,
+        item.company,
+        item.sentiment,
+        item.relevance,
+      ].filter(Boolean).map(t => `<span class="chip flat">${safe(t)}</span>`).join('');
+      const title = item.url
+        ? `<a href="${attr(item.url)}" target="_blank" rel="noopener">${safe(item.headline)}</a>`
+        : safe(item.headline);
+      return `<article class="news-card">
+        <div class="news-meta">
+          ${item.date ? `<span>${fmtDate(item.date)}</span>` : ''}
+          ${item.source ? `<span class="src">${safe(item.source)}</span>` : ''}
+          ${item.type ? `<span>${safe(item.type)}</span>` : ''}
+        </div>
+        <h3 class="news-title">${title}</h3>
+        ${item.summary ? `<p class="news-summary">${clip(safe(item.summary),260)}</p>` : ''}
+        ${tags ? `<div class="news-tags">${tags}</div>` : ''}
+      </article>`;
+    };
+    const fill = (id, rows, empty) => {
+      document.getElementById(id).innerHTML = rows && rows.length
+        ? rows.slice(0, 8).map(card).join('')
+        : `<div class="news-empty">${empty}</div>`;
+    };
+    fill('news-industry', N.industry || [], 'No industry news marked for dashboard yet.');
+    fill('news-companies', N.companies || [], 'No company-specific news marked for dashboard yet.');
+  }
+
+  /* ── MIS DASHBOARD ─────────────────────────────────────────────────── */
+  const MIS = (function () {
+    let D, P, segChart;
+    const BASIS = {
+      month: { cur:'curr', ly:'prior', aop:'aop', model:'model' },
+      ytd:   { cur:'ytd', ly:'ytdPrior', aop:'ytdAop', model:'ytdModel' },
+      ttm:   { cur:'ttm', ly:'ttmPrior', aop:'ttmAop', model:'ttmModel' },
+    };
+    const INVERT = new Set(['Gross Debt', 'Inventory', 'Inventory Days']);
+    const fmt = {
+      abs:  v => v==null ? '—' : '₹' + inr(Math.round(v/1e6)) + ' M',
+      pct:  v => v==null ? '—' : (v*100).toFixed(1) + '%',
+      days: v => v==null ? '—' : Math.round(v) + 'd',
+      count:v => v==null ? '—' : inr(Math.round(v)),
+      asp:  v => v==null ? '—' : '₹' + inr(Math.round(v)),
+    };
+    const val = (row, field) => fmt[row.type](row[field]);
+
+    function labels(b) {
+      const m = D.meta || {};
+      const [ry, rm] = m.reportingYM || [2026, 3];
+      const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const mon = MON[rm-1], yy = String(ry).slice(2), yyL = String(ry-1).slice(2);
+      const fyN = +(m.fy || 'FY27').replace(/\D/g,'');
+      return {
+        ...BASIS[b],
+        ...(b === 'month' ? { curL:`${mon} '${yy}`, lyL:`${mon} '${yyL}`, aopL:'AOP', modelL:'Blume Model', tag:`Month · ${m.month||''}` } :
+            b === 'ytd'   ? { curL:`FY${fyN} YTD`, lyL:`FY${fyN-1} YTD`, aopL:'AOP YTD', modelL:'Blume Model YTD', tag:`YTD · Apr–${mon} '${yy}` } :
+                            { curL:`TTM ${mon} '${yy}`, lyL:`TTM ${mon} '${yyL}`, aopL:'AOP TTM', modelL:'Blume Model TTM', tag:'TTM · trailing 12 months' }),
+      };
+    }
+
+    function delta(row, curF, baseF) {
+      const a = row[baseF], b = row[curF];
+      if (a == null || b == null) return null;
+      let txt, up;
+      if (row.type === 'pct') {
+        const bp = Math.round((b - a) * 10000);
+        up = bp >= 0; txt = (bp >= 0 ? '+' : '') + bp + ' bp';
+        if (bp === 0) return { txt:'flat', cls:'flat' };
+      } else {
+        if (a === 0) return null;
+        const g = b / a - 1;
+        up = g >= 0; txt = (g >= 0 ? '+' : '') + (g * 100).toFixed(1) + '%';
+        if (Math.abs(g) < 0.0005) return { txt:'flat', cls:'flat' };
+      }
+      const good = INVERT.has(row.label) ? !up : up;
+      return { txt, cls: good ? 'pos' : 'neg' };
+    }
+    const chip = (label, d) => !d ? '' :
+      `<span class="chip ${d.cls}"><span class="ch-lab">${label}</span>${d.txt}</span>`;
+    const dCell = d => !d ? `<td class="num dflat">—</td>` :
+      `<td class="num ${d.cls==='pos'?'dpos':d.cls==='neg'?'dneg':'dflat'}">${d.txt}</td>`;
+
+    function renderKpis(cfg) {
+      const items = ['Revenue Post-Tax', 'Gross Margin 2%', 'EBITDA', 'EBITDA%'];
+      document.getElementById('kpis').innerHTML = items.map(name => {
+        const row = P[name]; if (!row) return '';
+        const chips = [chip('vs LY', delta(row, cfg.cur, cfg.ly))];
+        if (cfg.aop)   chips.push(chip('vs AOP',        delta(row, cfg.cur, cfg.aop)));
+        if (cfg.model) chips.push(chip('vs Blume Model', delta(row, cfg.cur, cfg.model)));
+        return `<div class="kpi"><p class="name">${name}</p>
+          <p class="big num">${val(row, cfg.cur)}</p>
+          <div class="row">${chips.join('')}</div></div>`;
+      }).join('');
+      document.getElementById('kpi-tag').textContent = cfg.tag;
+    }
+
+    function renderParticulars(cfg) {
+      const t = document.getElementById('part-tbl');
+      const head = [`<th class="col-cur">${cfg.curL}</th>`,`<th>${cfg.lyL}</th>`,'<th>YoY</th>'];
+      if (cfg.aop)   head.push(`<th>${cfg.aopL}</th>`, '<th>vs AOP</th>');
+      if (cfg.model) head.push(`<th>${cfg.modelL}</th>`, '<th>vs Model</th>');
+      t.innerHTML = `<thead><tr><th>Metric</th>${head.join('')}</tr></thead>
+        <tbody>${D.particulars.map(row => {
+          let cells = `<td class="num col-cur">${val(row,cfg.cur)}</td><td class="num">${val(row,cfg.ly)}</td>${dCell(delta(row,cfg.cur,cfg.ly))}`;
+          if (cfg.aop)   cells += `<td class="num">${val(row,cfg.aop)}</td>${dCell(delta(row,cfg.cur,cfg.aop))}`;
+          if (cfg.model) cells += `<td class="num">${val(row,cfg.model)}</td>${dCell(delta(row,cfg.cur,cfg.model))}`;
+          return `<tr class="${row.type==='pct'?'dim':''}"><td>${row.label}</td>${cells}</tr>`;
+        }).join('')}</tbody>`;
+    }
+
+    function renderSegmental(cfg) {
+      const t = document.getElementById('seg-tbl');
+      const segs = D.segmental;
+      const totalRev = segs.reduce((s,x) => s + (x.rev[cfg.cur]||0), 0);
+      const totalGp  = segs.reduce((s,x) => s + (x.gp[cfg.cur]||0), 0);
+      const share = v => totalRev ? fmt.pct(v/totalRev) : '—';
+
+      const rows = segs.map(s => {
+        const rev = { type:'abs', label:s.label, ...s.rev };
+        const dy  = delta(rev, cfg.cur, cfg.ly);
+        let html = `<tr class="grp"><td>${s.label}</td>
+          <td class="num col-cur">${fmt.abs(s.rev[cfg.cur])}</td>
+          <td class="num">${share(s.rev[cfg.cur]||0)}</td>
+          <td class="num">${fmt.abs(s.gp[cfg.cur])}</td>
+          <td class="num">${fmt.pct(s.gm[cfg.cur])}</td>${dCell(dy)}</tr>`;
+        if (/refurb/i.test(s.label) && D.refurb && D.refurb.channels) {
+          const ch = D.refurb.channels;
+          [['Retail','retail'],['Online','online']].forEach(([lab,key]) => {
+            const cv = ch[key] ? ch[key][cfg.cur] : null;
+            if (cv != null) html += `<tr class="subrow"><td>${lab}</td>
+              <td class="num col-cur">${fmt.abs(cv)}</td>
+              <td class="num">${share(cv)}</td><td class="num">—</td><td class="num">—</td><td class="num dflat">—</td></tr>`;
+          });
+        }
+        return html;
+      }).join('');
+      const totalRow = `<tr class="total"><td>Total</td>
+        <td class="num col-cur">${fmt.abs(totalRev)}</td><td class="num">100.0%</td>
+        <td class="num">${fmt.abs(totalGp)}</td><td class="num">${fmt.pct(totalRev?totalGp/totalRev:null)}</td>
+        <td class="num dflat">—</td></tr>`;
+      t.innerHTML = `<thead><tr><th>Segment</th><th class="col-cur">${cfg.curL} Rev</th>
+        <th>% of total</th><th>GP</th><th>GM2%</th><th>Rev YoY</th></tr></thead>
+        <tbody>${rows}${totalRow}</tbody>`;
+
+      document.getElementById('seg-chart-title').textContent = `Revenue by segment · ${cfg.curL}`;
+      const lbl  = segs.map(s => s.label);
+      const vals = segs.map(s => (s.rev[cfg.cur]||0)/1e6);
+      const grad = ['#0E7C66','#1A9079','#3FA98F','#6FC0AB','#A7D8CB'];
+      if (segChart) { segChart.data.labels = lbl; segChart.data.datasets[0].data = vals; segChart.update(); return; }
+      segChart = new Chart(document.getElementById('segChart'), {
+        type:'bar',
+        data:{ labels:lbl, datasets:[{ label:'Revenue (₹M)', data:vals, backgroundColor:grad, borderRadius:6, barThickness:22 }] },
+        options:{
+          indexAxis:'y', layout:{padding:{right:12,left:4,top:4,bottom:4}},
+          plugins:{ legend:{display:false},
+            tooltip:{ callbacks:{ label:c=>'₹'+inr(Math.round(c.parsed.x))+' M' },
+              backgroundColor:'#13201D', padding:10, displayColors:false,
+              titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'IBM Plex Mono'} } },
+          scales:{
+            x:{ grid:{color:'#E8ECEA'}, ticks:{ font:{family:'IBM Plex Mono',size:10}, color:'#6C7B75', callback:v=>'₹'+inr(v)+'M' } },
+            y:{ grid:{display:false}, ticks:{ font:{family:'IBM Plex Mono',size:11}, color:'#37433F', padding:8, autoSkip:false } } },
+          animation:{ duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 600 } }
+      });
+    }
+
+    function renderRefurb(cfg) {
+      const u = D.refurb.units, a = D.refurb.asp;
+      const card = (row, name, big, sub) => {
+        const chips = [chip('vs LY', delta(row, cfg.cur, cfg.ly))];
+        if (cfg.aop)   chips.push(chip('vs AOP',        delta(row, cfg.cur, cfg.aop)));
+        if (cfg.model) chips.push(chip('vs Blume Model', delta(row, cfg.cur, cfg.model)));
+        return `<div class="rf"><p class="name">${name}</p><p class="big num">${big}</p>
+          <p class="sub">${sub}</p><div class="row">${chips.join('')}</div></div>`;
+      };
+      document.getElementById('refurb').innerHTML =
+        card({type:'count',...u}, 'Refurbished devices sold', fmt.count(u[cfg.cur]), `${cfg.curL} · refurbished unit volume`) +
+        card({type:'asp',...a},   'Average selling price',    fmt.asp(a[cfg.cur]),   `${cfg.curL} · revenue ÷ devices sold`);
+    }
+
+    function renderHero(cfg) {
+      const seg = D.segmental.find(s => /refurb/i.test(s.label));
+      if (!seg) { document.getElementById('hero').style.display='none'; return; }
+      const rev = seg.rev, u = D.refurb.units, a = D.refurb.asp;
+      if (!rev[cfg.ly] || !u[cfg.ly] || !a[cfg.ly]) { document.getElementById('hero').style.display='none'; return; }
+      const revG = rev[cfg.cur]/rev[cfg.ly]-1;
+      const uG   = u[cfg.cur]/u[cfg.ly]-1;
+      const aG   = a[cfg.cur]/a[cfg.ly]-1;
+      const pc   = x => (x>=0?'+':'') + (x*100).toFixed(0) + '%';
+      const pc1  = x => (x>=0?'+':'') + (x*100).toFixed(1) + '%';
+      const denom = Math.max(revG, uG, 0.0001);
+      const volW   = Math.max(4, Math.min(100, uG/denom*100));
+      const priceW = Math.max(2, Math.min(100, aG/denom*100));
+      const share  = P['Revenue Post-Tax'] ? rev[cfg.cur]/P['Revenue Post-Tax'][cfg.cur] : null;
+      document.getElementById('hero').innerHTML = `
+        <p class="k">The refurbished engine · ${cfg.curL} vs ${cfg.lyL}</p>
+        <p class="lead">Refurbished revenue grew <em>${pc(revG)}</em> — almost entirely on <em>volume</em>, not price.</p>
+        <div class="decomp">
+          <div class="bar-row"><span class="lab">Volume</span>
+            <span class="bar-track"><span class="bar-fill vol" style="transform:scaleX(${volW/100})"></span></span>
+            <span class="val">${pc1(uG)}</span></div>
+          <div class="bar-row"><span class="lab">Price</span>
+            <span class="bar-track"><span class="bar-fill price" style="transform:scaleX(${priceW/100})"></span></span>
+            <span class="val">${pc1(aG)}</span></div>
+        </div>
+        <p class="foot">Cashify is scaling by moving <b>more devices</b>, not charging more per device.
+          ${share != null ? `Refurbished is the largest segment at <b>${(share*100).toFixed(0)}% of revenue</b>; its growth decomposes into units ${pc1(uG)} and ASP ${pc1(aG)}.` : ''}</p>`;
+    }
+
+    function render(b) {
+      const cfg = labels(b);
+      renderHero(cfg); renderKpis(cfg); renderParticulars(cfg); renderSegmental(cfg); renderRefurb(cfg);
+    }
+
+    return {
+      mount(data) {
+        D = data;
+        P = Object.fromEntries(D.particulars.map(r => [r.label, r]));
+        document.getElementById('mis-title').textContent =
+          'MIS Dashboard' + (D.meta && D.meta.month ? ' · ' + D.meta.month : '');
+        const links = (D.meta && D.meta.links) || {};
+        document.getElementById('mis-links').innerHTML =
+          (links.mis   ? `<a href="${links.mis}"   target="_blank" rel="noopener">View MIS workbook</a>`   : '') +
+          (links.model ? `<a href="${links.model}" target="_blank" rel="noopener">View Blume Model</a>` : '');
+        document.querySelectorAll('.toggle button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.toggle button').forEach(x => x.setAttribute('aria-pressed','false'));
+            btn.setAttribute('aria-pressed','true');
+            render(btn.dataset.basis);
+          });
+        });
+        render('month');
+      },
+      refreshChart() { if (segChart) segChart.resize(); }
+    };
+  })();
+
+  /* ── CAPITAL & CAP TABLE ────────────────────────────────────────────── */
+  function renderCapital(C) {
+    const b = C.blume || {}, lv = C.latestValuation || {}, lk = C.links || {};
+    document.getElementById('cap-links').innerHTML =
+      (lk.capTable   ? `<a href="${lk.capTable}"   target="_blank" rel="noopener">Cap table (${C.asOf||''})</a>`          : '') +
+      (lk.valuation  ? `<a href="${lk.valuation}"  target="_blank" rel="noopener">Valuation &amp; fund-wise holding</a>` : '') +
+      (lk.roundWise  ? `<a href="${lk.roundWise}"  target="_blank" rel="noopener">Round-wise details</a>`                 : '') +
+      (lk.investmentProfile ? `<a href="${lk.investmentProfile}" target="_blank" rel="noopener">Investment profile</a>`   : '');
+
+    const kpis = [
+      ['Primary capital raised', cr(C.totalPrimaryRaisedCr), `${(C.rounds||[]).length} rounds · ₹ Cr`],
+      ['Latest valuation',       cr(lv.postMoney),           `${lv.round||''} post-money${lv.date?' · '+fmtMon(lv.date):''} · ₹ Cr`],
+      ['Blume current stake',    pct(b.currentStake, 2),     `MTM ${cr(b.mtmCr)} on ${cr(b.investmentCostCr)} cost`],
+      ['Blume MOIC',             mult(b.moic),               'current MTM ÷ cost · ₹ Cr basis'],
+    ];
+    document.getElementById('cap-kpis').innerHTML = kpis.map(([n,big,sub]) =>
+      `<div class="kpi"><p class="name">${n}</p><p class="big num">${big}</p><p class="sub">${sub}</p></div>`).join('');
+
+    const funds = b.funds || [];
+    const valCell = f => f.status === 'Exited' ? `${cr(f.realisedCr)} <span class="col-note">realised</span>` : cr(f.mtmCr);
+    document.getElementById('funds-tbl').innerHTML =
+      `<thead><tr><th>Fund</th><th>Status</th><th>Stake</th><th>Invested (₹ Cr)</th>
+        <th>Value (₹ Cr)</th><th>MOIC</th><th>Gross IRR</th></tr></thead>
+       <tbody>${funds.map(f => `<tr>
+         <td>${safe(f.fund)}</td><td>${safe(f.status)||'—'}</td>
+         <td class="num">${typeof f.stakeCurrent==='number' ? pct(f.stakeCurrent,2) : '—'}</td>
+         <td class="num">${cr(f.investedCostCr)}</td>
+         <td class="num">${valCell(f)}</td>
+         <td class="num">${mult(f.moic)}</td>
+         <td class="num">${typeof f.irr==='number' ? pct(f.irr,0) : '—'}</td></tr>`).join('')}
+       <tr class="total"><td>Blume — active</td><td></td>
+         <td class="num">${pct(b.currentStake,2)}</td>
+         <td class="num">${cr(b.investmentCostCr)}</td>
+         <td class="num">${cr(b.mtmCr)}</td>
+         <td class="num">${mult(b.moic)}</td><td></td></tr>
+       </tbody>`;
+
+    document.getElementById('rounds-tbl').innerHTML =
+      `<thead><tr><th>Round</th><th>Date</th><th>Primary (₹ Cr)</th><th>Pre-money (₹ Cr)</th><th>Post-money (₹ Cr)</th></tr></thead>
+       <tbody>${(C.rounds||[]).map(r => `<tr>
+         <td>${safe(r.round)}</td><td class="num">${r.date ? fmtMon(r.date) : '—'}</td>
+         <td class="num">${cr(r.primary)}</td><td class="num">${cr(r.preMoney)}</td>
+         <td class="num">${cr(r.postMoney)}</td></tr>`).join('')}
+       <tr class="total"><td>Total primary</td><td></td><td class="num">${cr(C.totalPrimaryRaisedCr)}</td><td></td><td></td></tr>
+       </tbody>`;
+
+    document.getElementById('cap-tag').textContent = `diluted holding %${C.asOf ? ' · as on '+C.asOf : ''}`;
+    const cap = (C.capTable||[]).filter(x => !x.isTotal);
+    const maxPct = Math.max(...cap.map(x => x.pct||0), 0.001);
+    document.getElementById('cap-list').innerHTML =
+      cap.map(x => {
+        const isBlume  = /blume/i.test(x.name);
+        const isStruct = x.group === 'ESOP';
+        const cls = isBlume ? 'accent' : isStruct ? 'structural' : '';
+        return `<div class="cap-row ${cls}">
+          <span class="cn">${safe(x.name)}</span>
+          <span class="cap-track"><span class="cap-fill" style="width:${(x.pct/maxPct*100).toFixed(1)}%"></span></span>
+          <span class="pv">${pct(x.pct,2)}</span></div>`;
+      }).join('') +
+      `<div class="cap-row total"><span class="cn">Total</span><span></span>
+        <span class="pv">${pct(C.capTableTotalPct||1, 0)}</span></div>`;
+  }
+
+  /* ── COMPS ──────────────────────────────────────────────────────────── */
+  function renderComps(K) {
+    const PM = K.publicMarkets || {};
+    const rowsData = [];
+    if (PM.subject) rowsData.push({...PM.subject, _subject:true});
+    (PM.peers||[]).forEach(p => rowsData.push(p));
+    const cell = (v, f) => `<td class="num">${f(v)}</td>`;
+    const statRow = (label, s) => !s ? '' :
+      `<tr class="dim"><td>${label}</td><td></td><td></td><td></td><td></td><td></td>
+        <td class="num">${mult(s.mcRevenue)}</td><td class="num">${mult(s.mcEbitda)}</td></tr>`;
+
+    document.getElementById('pm-tbl').innerHTML =
+      `<thead><tr><th>Company</th><th>Mkt Cap</th><th>Revenue</th><th>Rev gr.</th>
+        <th>Gross M.</th><th>EBITDA M.</th><th>MC/Rev</th><th>MC/EBITDA</th></tr></thead>
+       <tbody>${rowsData.map(r => `<tr class="${r._subject?'accent':''}">
+         <td>${safe(r.company)}</td>
+         ${cell(r.marketCap,cr)}${cell(r.revenue,cr)}${cell(r.revGrowth,v=>pct(v,1))}
+         ${cell(r.grossMargin,v=>pct(v,1))}${cell(r.ebitdaMargin,v=>pct(v,1))}
+         ${cell(r.mcRevenue,mult)}${cell(r.mcEbitda,mult)}</tr>`).join('')}
+       ${statRow('Peer median', PM.stats?.median)}
+       ${statRow('Peer mean',   PM.stats?.mean)}
+       ${statRow('Peer high',   PM.stats?.high)}
+       ${statRow('Peer low',    PM.stats?.low)}
+       </tbody>`;
+
+    const insights = [['Guidance','guidance'],['Growth drivers','growthDrivers'],['Headwinds','headwinds'],['KPIs','kpis']];
+    document.getElementById('cc-grid').innerHTML = (K.conCalls||[]).map(g => {
+      const calls = g.calls.map(c => `
+        <div class="cc-call">
+          <p class="cc-date">${c.date ? fmtMon(c.date) : 'date n/a'}</p>
+          ${insights.filter(([,k]) => c[k] && !/^no answer/i.test(c[k])).slice(0,3)
+            .map(([lab,k]) => `<p class="ins-lab">${lab}</p><p class="ins-txt">${clip(safe(c[k]),280)}</p>`).join('')}
+        </div>`).join('');
+      return `<div class="cc"><p class="cc-co">${safe(g.company)}</p>${calls}</div>`;
+    }).join('');
+  }
+
+  /* ── SPECIAL PROJECTS ───────────────────────────────────────────────── */
+  function renderProjects(list) {
+    document.getElementById('sp-grid').innerHTML = (list||[]).map(p => {
+      const s   = (p.status||'').toLowerCase();
+      const cls = /complete/.test(s) ? 'done' : /wip|progress/.test(s) ? 'wip' : 'other';
+      return `<div class="sp">
+        <div class="sp-top"><p class="sp-name">${safe(p.project)}</p>
+          ${p.status ? `<span class="badge ${cls}">${safe(p.status)}</span>` : ''}</div>
+        ${p.description ? `<p class="sp-desc">${clip(safe(p.description),220)}</p>` : ''}
+        ${p.endGoal ? `<p class="sp-goal"><b>Goal:</b> ${safe(p.endGoal)}</p>` : ''}</div>`;
+    }).join('');
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────────────────────── */
+  function renderFooter(D) {
+    const today = new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'});
+    const m = D.meta || {};
+    const src = [m.misSource, m.modelSource].filter(Boolean).join(' + ') || 'Growth Huddle Cashify.xlsx';
+    document.getElementById('foot').textContent =
+      `[M] = Blume Model · Source: ${src} · data.json built locally, committed to repo · Rendered ${today}`;
+  }
+})();
+  </script>
+</body>
+</html>
