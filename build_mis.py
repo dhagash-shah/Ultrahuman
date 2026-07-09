@@ -17,7 +17,7 @@ DESIGN
 * Control check: Dec'25 Revenue Post Tax must reconcile to ₹1,692,076,864.
 
 USAGE
-    python3 build_mis.py <MIS.xlsx> <Model.xlsx> [data.json]
+    python3 build_mis.py <MIS.xlsx> <Model.xlsx> [data.json] [growth_huddle.xlsx]
 """
 import os, sys, json, datetime, re
 from pathlib import Path
@@ -190,7 +190,66 @@ def find_sheet_with_labels(wb, labels):
     return best if best_score >= max(3, min(5, len(wanted))) else None
 
 
-def build_ultrahuman(mis_path, model_path=None):
+def ultrahuman_model_summary(growth_path):
+    if not growth_path or not Path(growth_path).exists():
+        return {}
+    wb = openpyxl.load_workbook(growth_path, data_only=True)
+    label_map = {
+        "Gross Revenue": "Gross Revenue",
+        "Net Revenue": "Net Revenue",
+        "Gross Margin": "Gross Profit",
+        "Gross Margin %": "Gross Margin",
+        "EBITDA from Operating Activities": "EBITDA",
+        "EBITDA %": "EBITDA Margin",
+    }
+    out = {}
+    for ws in wb.worksheets:
+        model_col = None
+        label_col = None
+        for row in ws.iter_rows():
+            for cell in row:
+                if isinstance(cell.value, str) and cell.value.strip().lower() == "model fy26":
+                    model_col = cell.column
+                    label_col = max(1, cell.column - 9)
+                    break
+            if model_col:
+                break
+        if not model_col:
+            continue
+        for r in range(1, ws.max_row + 1):
+            label = ws.cell(r, label_col).value
+            if not isinstance(label, str):
+                continue
+            key = label_map.get(label.strip())
+            value = ws.cell(r, model_col).value
+            if key and isinstance(value, (int, float)):
+                out[key] = float(value)
+        if out:
+            return out
+    return out
+
+
+def apply_ultrahuman_model_summary(particulars, summary):
+    if not summary:
+        return False
+    pct_labels = {"Gross Margin", "Contribution Margin", "EBITDA Margin"}
+    for row in particulars:
+        label = row.get("label")
+        if label not in summary:
+            continue
+        annual = summary[label]
+        if label in pct_labels:
+            row["model"] = annual
+            row["ytdModel"] = annual
+            row["ttmModel"] = annual
+        else:
+            row["model"] = annual / 12
+            row["ytdModel"] = annual
+            row["ttmModel"] = annual
+    return True
+
+
+def build_ultrahuman(mis_path, model_path=None, growth_path=None):
     wb = openpyxl.load_workbook(mis_path, data_only=True)
     metric_defs = [
         ("No of Rings", "count", "Number of Rings"),
@@ -315,6 +374,8 @@ def build_ultrahuman(mis_path, model_path=None):
         return [{"label": name.strip(), "rev": series(name), "gp": gp.copy(), "gm": gm.copy()} for name in channels]
 
     particulars = [metric_row(*d) for d in metric_defs]
+    model_summary = ultrahuman_model_summary(growth_path)
+    used_model_summary = apply_ultrahuman_model_summary(particulars, model_summary)
     monthname = datetime.date(ry, rm, 1).strftime("%b %Y")
     fy = f"FY{str((fy_start_year(ry, rm) + 1))[2:]}"
     checks = [
@@ -335,6 +396,7 @@ def build_ultrahuman(mis_path, model_path=None):
                 "mis": "https://drive.google.com/drive/folders/1x3yk1oT4eQrMW_Rpy3V9HAa1fVSHuMhG",
                 "model": "https://docs.google.com/spreadsheets/d/1-zLSKGjul7KWBm0t1KpfWb4_O6_jBoXM/edit",
             },
+            "modelBasis": "Growth Huddle Model FY26; monthly model shown as annual / 12" if used_model_summary else None,
         },
         "particulars": particulars,
         "segmental": channel_segmental(),
@@ -343,10 +405,10 @@ def build_ultrahuman(mis_path, model_path=None):
 
 
 # ----------------------------------------------------------------------------- #
-def build(mis_path, model_path):
+def build(mis_path, model_path, growth_path=None):
     wb_mis = openpyxl.load_workbook(mis_path, data_only=True)
     if "Consolidated" not in wb_mis.sheetnames:
-        return build_ultrahuman(mis_path, model_path)
+        return build_ultrahuman(mis_path, model_path, growth_path)
     MIS = Sheet(wb_mis["Consolidated"])
     wbm = openpyxl.load_workbook(model_path, data_only=True)
     MODEL = Sheet(wbm["Consolidated - P&L"])
@@ -617,16 +679,17 @@ def run_checks(MIS, rev_row, segmental, particulars, channels, ref_rev_row, MONT
 # ----------------------------------------------------------------------------- #
 def main():
     if len(sys.argv) < 3:
-        sys.exit("usage: python3 build_mis.py <MIS.xlsx> <Model.xlsx> [data.json]")
+        sys.exit("usage: python3 build_mis.py <MIS.xlsx> <Model.xlsx> [data.json] [growth_huddle.xlsx]")
     mis_path, model_path = sys.argv[1], sys.argv[2]
     out_path = sys.argv[3] if len(sys.argv) > 3 else "data.json"
+    growth_path = sys.argv[4] if len(sys.argv) > 4 else None
 
     # merge into existing data.json (preserve capital / comps / specialProjects)
     data = {}
     if Path(out_path).exists():
         data = json.loads(Path(out_path).read_text())
     try:
-        mis_block, checks = build(mis_path, model_path)
+        mis_block, checks = build(mis_path, model_path, growth_path)
     except StaleMISFile as e:
         existing = (data.get("mis") or {}).get("meta", {}).get("reportingYM")
         if existing and tuple(existing) >= e.minimum:

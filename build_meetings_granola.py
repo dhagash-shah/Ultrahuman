@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build_meetings_granola.py — pull recent Cashify meeting notes from Granola into
+build_meetings_granola.py — pull recent company meeting notes from Granola into
 data.json.
 
 Requires GRANOLA_API_KEY. If no key is present, preserves any existing meetings
@@ -120,14 +120,19 @@ def note_text(note):
     return "\n".join(str(p) for p in parts if p)
 
 
+def query_terms():
+    raw = os.environ.get("GRANOLA_MEETING_QUERY", "Ultrahuman")
+    return [q.strip().lower() for q in raw.split(",") if q.strip()]
+
+
 def is_wanted(note):
-    query = os.environ.get("GRANOLA_MEETING_QUERY", "Ultrahuman").strip().lower()
+    queries = query_terms()
     text = note_text(note).lower()
-    if query and query not in text:
+    if queries and not any(q in text for q in queries):
         return False
     title = str(note.get("title") or "")
     event_title = str((note.get("calendar_event") or {}).get("event_title") or "")
-    return bool(MEETING_TERMS.search(title) or MEETING_TERMS.search(event_title) or query)
+    return bool(MEETING_TERMS.search(title) or MEETING_TERMS.search(event_title) or queries)
 
 
 def markdown_bullets(markdown, fallback_text):
@@ -188,18 +193,39 @@ def to_item(note):
 def search_meetings(token):
     wanted = int_env("GRANOLA_MEETING_LIMIT", 5, lo=1, hi=12)
     items = []
-    for raw in list_notes(token):
+    fetched = list_notes(token)
+    checked = 0
+    fallback = []
+    for raw in fetched:
         try:
             note = get_note(token, raw["id"])
         except Exception as e:
             print(f"! skipped Granola note {raw.get('id')}: {e}")
             continue
+        checked += 1
         if is_wanted(note):
             items.append(to_item(note))
+        elif MEETING_TERMS.search(note_text(note)):
+            fallback.append(to_item(note))
         if len(items) >= wanted:
             break
+    if not items and truthy("GRANOLA_ALLOW_RECENT_FALLBACK"):
+        items = fallback[:wanted]
     items.sort(key=lambda x: x.get("date") or x.get("lastEdited") or "", reverse=True)
-    return items[:wanted]
+    meta = {
+        "status": "ok" if items else "empty",
+        "query": ", ".join(query_terms()),
+        "fetched": len(fetched),
+        "checked": checked,
+        "matched": len(items),
+        "message": None,
+    }
+    if not items:
+        if not fetched:
+            meta["message"] = "Granola returned no notes for the configured lookback window."
+        else:
+            meta["message"] = f"Granola returned {len(fetched)} notes, but none matched: {meta['query'] or 'no query'}."
+    return items[:wanted], meta
 
 
 def main():
@@ -207,17 +233,26 @@ def main():
     data = json.loads(Path(out_path).read_text()) if Path(out_path).exists() else {}
     token = api_key()
     if not token:
-        data.setdefault("meetings", {"items": []})
+        data["meetings"] = {
+            "source": "Granola",
+            "items": [],
+            "meta": {
+                "status": "missing_api_key",
+                "message": "Set GRANOLA_API_KEY in this GitHub repository.",
+            },
+        }
         Path(out_path).write_text(json.dumps(data, indent=2, ensure_ascii=False))
         print("! skipped Granola meetings: set GRANOLA_API_KEY")
         return
     try:
-        items = search_meetings(token)
+        items, meta = search_meetings(token)
     except Exception as e:
         sys.exit(f"ERROR: {e}")
-    data["meetings"] = {"source": "Granola", "items": items}
+    data["meetings"] = {"source": "Granola", "items": items, "meta": meta}
     Path(out_path).write_text(json.dumps(data, indent=2, ensure_ascii=False))
     print(f"✓ wrote {len(items)} recent Granola meetings to {out_path}")
+    if meta.get("message"):
+        print(f"  {meta['message']}")
 
 
 if __name__ == "__main__":

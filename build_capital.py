@@ -6,11 +6,12 @@ Sources (all pulled locally via drive_pull.py first):
   captable.pdf            ← shareholding-pattern PDF (diluted %, entity-level)
   investment_profile.xlsx ← Blume fund-wise position (₹ Mn per fund sheet)
   growth_huddle.xlsx      ← Exit Thinking sheet (round-wise, ₹ Cr)
+  model.xlsx              ← optional fallback for image-only cap table PDFs
 
 UNITS: everything normalised to ₹ Cr for display (₹ Mn ÷ 10).
 
 USAGE
-    python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx [data.json]
+    python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx [data.json] [model.xlsx]
 
 Run AFTER build_data.py so the rest of data.json already exists.
 """
@@ -34,6 +35,15 @@ LINKS = {
 
 # ── Entity name normalisation for cap-table PDF ─────────────────────────── #
 NAME_MAP = [
+    ("founders",   "Founders",                  "Founders"),
+    ("nexus",      "Nexus",                     "Investor"),
+    ("awi",        "AWI",                       "Investor"),
+    ("deepinder",  "Deepinder Goyal",           "Investor"),
+    ("steadview",  "Steadview",                 "Investor"),
+    ("flintera",   "Flintera",                  "Investor"),
+    ("qualcomm",   "Qualcomm",                  "Investor"),
+    ("alteria",    "Alteria",                   "Investor"),
+    ("msop",       "MSOP",                      "ESOP"),
     ("mandeep",    "Mandeep Manocha",           "Founders"),
     ("nakul",      "Nakul Kumar",               "Founders"),
     ("amit sethi", "Amit Sethi",                "Founders"),
@@ -127,6 +137,58 @@ def parse_captable_pdf(pdf_path):
     return cap, total
 
 
+def parse_captable_model(model_path):
+    wb = openpyxl.load_workbook(model_path, data_only=True)
+    for ws in wb.worksheets:
+        stake_row = None
+        label_col = None
+        for row in ws.iter_rows():
+            for cell in row:
+                if isinstance(cell.value, str) and cell.value.strip().lower() == "stake":
+                    stake_row = cell.row
+                    label_col = cell.column
+                    break
+            if stake_row:
+                break
+        if not stake_row or not label_col:
+            continue
+
+        entities = []
+        for r in range(max(1, stake_row - 8), stake_row):
+            name = ws.cell(r, label_col).value
+            if isinstance(name, str) and "blume" in name.lower() and "total" in name.lower():
+                raw_vals = [
+                    float(ws.cell(r, c).value)
+                    for c in range(label_col + 1, min(ws.max_column, label_col + 12) + 1)
+                    if isinstance(ws.cell(r, c).value, (int, float)) and 0 <= ws.cell(r, c).value <= 1
+                ]
+                if raw_vals:
+                    pct = raw_vals[3] if len(raw_vals) >= 4 else raw_vals[-1]
+                    entities.append({"name": "Blume Ventures", "group": "Investor", "pct": round(pct, 4)})
+                break
+        for r in range(stake_row + 1, min(ws.max_row, stake_row + 40) + 1):
+            name = ws.cell(r, label_col).value
+            if not isinstance(name, str) or not name.strip():
+                if entities:
+                    break
+                continue
+            raw_vals = []
+            for c in range(label_col + 1, min(ws.max_column, label_col + 12) + 1):
+                v = ws.cell(r, c).value
+                if isinstance(v, (int, float)) and 0 <= v <= 1:
+                    raw_vals.append(float(v))
+            if not raw_vals:
+                continue
+            # Prefer the FY26 column when the model carries FY23-FY28 horizontally.
+            pct = raw_vals[3] if len(raw_vals) >= 4 else raw_vals[-1]
+            disp, grp = clean_name(name)
+            entities.append({"name": disp, "group": grp, "pct": round(pct, 4)})
+
+        if entities:
+            return entities, round(sum(e["pct"] for e in entities), 4)
+    return [], None
+
+
 # ── 2. Fund-wise holding from Investment Profile workbook (₹ Mn) ─────────── #
 def hdr_col(ws, *needles):
     for r in (2, 3, 1):
@@ -206,15 +268,20 @@ def parse_rounds_from_gh(gh_xlsx):
 # ── main ─────────────────────────────────────────────────────────────────── #
 def main():
     if len(sys.argv) < 4:
-        sys.exit("usage: python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx [data.json]")
+        sys.exit("usage: python3 build_capital.py captable.pdf investment_profile.xlsx growth_huddle.xlsx [data.json] [model.xlsx]")
     pdf, ip, gh = sys.argv[1], sys.argv[2], sys.argv[3]
     out_path    = sys.argv[4] if len(sys.argv) > 4 else "data.json"
+    model_path  = sys.argv[5] if len(sys.argv) > 5 else None
 
     try:
         cap, cap_total = parse_captable_pdf(pdf)
     except Exception as e:
         print(f"⚠️  skipped cap-table PDF parse: {e}")
         cap, cap_total = [], None
+    if not cap and model_path:
+        cap, cap_total = parse_captable_model(model_path)
+        if cap:
+            print(f"✓ used model workbook cap-table fallback from {Path(model_path).name}")
     blume          = parse_investment_profile(ip)
     rounds_data    = parse_rounds_from_gh(gh)
 

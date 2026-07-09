@@ -427,7 +427,7 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
         ${bullets ? `<ul class="meet-summary">${bullets}</ul>` : ''}
         ${tags ? `<div class="meet-tags">${tags}</div>` : ''}
       </article>`;
-    }).join('') : `<div class="meet-empty">No recent meetings pulled from Granola yet.</div>`;
+    }).join('') : `<div class="meet-empty">${safe((M.meta || {}).message || 'No recent meetings pulled from Granola yet.')}</div>`;
   }
 
   /* ── NEWS ───────────────────────────────────────────────────────────── */
