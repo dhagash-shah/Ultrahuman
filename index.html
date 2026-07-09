@@ -517,7 +517,8 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
       `<td class="num ${d.cls==='pos'?'dpos':d.cls==='neg'?'dneg':'dflat'}">${d.txt}</td>`;
 
     function renderKpis(cfg) {
-      const items = ['Revenue Post-Tax', 'Gross Margin 2%', 'EBITDA', 'EBITDA%'];
+      let items = ['Revenue Post-Tax', 'Gross Margin 2%', 'EBITDA', 'EBITDA%'].filter(name => P[name]);
+      if (!items.length) items = ['Gross Revenue', 'Net Revenue', 'Gross Margin', 'EBITDA Margin'].filter(name => P[name]);
       document.getElementById('kpis').innerHTML = items.map(name => {
         const row = P[name]; if (!row) return '';
         const chips = [chip('vs LY', delta(row, cfg.cur, cfg.ly))];
@@ -547,18 +548,26 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
     function renderSegmental(cfg) {
       const t = document.getElementById('seg-tbl');
       const segs = D.segmental;
+      if (!segs || !segs.length) {
+        t.innerHTML = `<tbody><tr><td>No segment or channel revenue available.</td></tr></tbody>`;
+        return;
+      }
       const totalRev = segs.reduce((s,x) => s + (x.rev[cfg.cur]||0), 0);
       const totalGp  = segs.reduce((s,x) => s + (x.gp[cfg.cur]||0), 0);
+      const hasGp = segs.some(x => x.gp && x.gp[cfg.cur] != null);
       const share = v => totalRev ? fmt.pct(v/totalRev) : '—';
 
       const rows = segs.map(s => {
         const rev = { type:'abs', label:s.label, ...s.rev };
         const dy  = delta(rev, cfg.cur, cfg.ly);
-        let html = `<tr class="grp"><td>${s.label}</td>
+        let html = hasGp ? `<tr class="grp"><td>${s.label}</td>
           <td class="num col-cur">${fmt.abs(s.rev[cfg.cur])}</td>
           <td class="num">${share(s.rev[cfg.cur]||0)}</td>
           <td class="num">${fmt.abs(s.gp[cfg.cur])}</td>
-          <td class="num">${fmt.pct(s.gm[cfg.cur])}</td>${dCell(dy)}</tr>`;
+          <td class="num">${fmt.pct(s.gm[cfg.cur])}</td>${dCell(dy)}</tr>` :
+          `<tr class="grp"><td>${s.label}</td>
+          <td class="num col-cur">${fmt.abs(s.rev[cfg.cur])}</td>
+          <td class="num">${share(s.rev[cfg.cur]||0)}</td>${dCell(dy)}</tr>`;
         if (/refurb/i.test(s.label) && D.refurb && D.refurb.channels) {
           const ch = D.refurb.channels;
           [['Retail','retail'],['Online','online']].forEach(([lab,key]) => {
@@ -570,15 +579,21 @@ footer .mono{font-size:11.5px; letter-spacing:.04em}
         }
         return html;
       }).join('');
-      const totalRow = `<tr class="total"><td>Total</td>
+      const totalRow = hasGp ? `<tr class="total"><td>Total</td>
         <td class="num col-cur">${fmt.abs(totalRev)}</td><td class="num">100.0%</td>
         <td class="num">${fmt.abs(totalGp)}</td><td class="num">${fmt.pct(totalRev?totalGp/totalRev:null)}</td>
-        <td class="num dflat">—</td></tr>`;
-      t.innerHTML = `<thead><tr><th>Segment</th><th class="col-cur">${cfg.curL} Rev</th>
+        <td class="num dflat">—</td></tr>` :
+        `<tr class="total"><td>Total</td><td class="num col-cur">${fmt.abs(totalRev)}</td><td class="num">100.0%</td><td class="num dflat">—</td></tr>`;
+      const segLabel = (D.meta && D.meta.segmentLabel) || 'Segment';
+      t.innerHTML = hasGp ? `<thead><tr><th>${segLabel}</th><th class="col-cur">${cfg.curL} Rev</th>
         <th>% of total</th><th>GP</th><th>GM2%</th><th>Rev YoY</th></tr></thead>
+        <tbody>${rows}${totalRow}</tbody>` :
+        `<thead><tr><th>${segLabel}</th><th class="col-cur">${cfg.curL} Rev</th>
+        <th>% of total</th><th>Rev YoY</th></tr></thead>
         <tbody>${rows}${totalRow}</tbody>`;
 
-      document.getElementById('seg-chart-title').textContent = `Revenue by segment · ${cfg.curL}`;
+      const segTitle = (D.meta && D.meta.segmentTitle) || 'Revenue by segment';
+      document.getElementById('seg-chart-title').textContent = `${segTitle} · ${cfg.curL}`;
       const lbl  = segs.map(s => s.label);
       const vals = segs.map(s => (s.rev[cfg.cur]||0)/1e6);
       const grad = ['#0E7C66','#1A9079','#3FA98F','#6FC0AB','#A7D8CB'];

@@ -159,9 +159,195 @@ def ratio(num, den):
     return num / den
 
 
+def company_name():
+    return os.environ.get("COMPANY_NAME", "Ultrahuman")
+
+
+def empty_metric(metric_type):
+    return {
+        "type": metric_type,
+        "curr": None, "prior": None, "aop": None, "model": None,
+        "ytd": None, "ytdPrior": None, "ytdAop": None, "ytdModel": None,
+        "ttm": None, "ttmPrior": None, "ttmAop": None, "ttmModel": None,
+    }
+
+
+def find_sheet_with_labels(wb, labels):
+    wanted = {x.lower() for x in labels}
+    best = None
+    best_score = 0
+    for ws in wb.worksheets:
+        seen = set()
+        for row in ws.iter_rows():
+            for cell in row:
+                if isinstance(cell.value, str):
+                    text = cell.value.strip().lower()
+                    if text in wanted:
+                        seen.add(text)
+        if len(seen) > best_score:
+            best = ws
+            best_score = len(seen)
+    return best if best_score >= max(3, min(5, len(wanted))) else None
+
+
+def build_ultrahuman(mis_path, model_path=None):
+    wb = openpyxl.load_workbook(mis_path, data_only=True)
+    metric_defs = [
+        ("No of Rings", "count", "Number of Rings"),
+        ("Gross Revenue", "abs", "Gross Revenue"),
+        ("Net Revenue", "abs", "Net Revenue"),
+        ("Gross Profit", "abs", "Gross Margin"),
+        ("Gross Margin", "pct", "Gross Margin %"),
+        ("Contribution Profit", "abs", "Contribution"),
+        ("Contribution Margin", "pct", "Contribution %"),
+        ("EBITDA", "abs", "EBITDA"),
+        ("EBITDA Margin", "pct", "EBITDA %"),
+    ]
+    source_labels = [x[2] for x in metric_defs]
+    ws = find_sheet_with_labels(wb, source_labels)
+    if ws is None:
+        sys.exit(
+            "ERROR: could not find an Ultrahuman MIS summary sheet with expected rows: "
+            + ", ".join(source_labels)
+        )
+    MIS = Sheet(ws)
+    reporting_row = MIS.total_row("Net Revenue") or MIS.total_row("Gross Revenue")
+    actual_months = sorted([(y, m) for (y, m, p) in MIS.idx if not p])
+    reporting = None
+    for (y, m) in reversed(actual_months):
+        v = MIS.cell(reporting_row, y, m, False)
+        if v and v > 0:
+            reporting = (y, m)
+            break
+    if not reporting:
+        sys.exit("ERROR: could not detect a reporting month with revenue > 0 in Ultrahuman MIS workbook")
+    ry, rm = reporting
+    min_ym = min_reporting_ym()
+    if (ry, rm) < min_ym:
+        raise StaleMISFile((ry, rm), min_ym)
+
+    months = {
+        "cur": [(ry, rm)],
+        "ly": [(ry - 1, rm)],
+        "ytd": ytd_months(ry, rm),
+        "ytdLy": shift_years(ytd_months(ry, rm), 1),
+        "ttm": trailing_months(ry, rm, 12),
+        "ttmLy": shift_years(trailing_months(ry, rm, 12), 1),
+    }
+
+    net_rev_row = MIS.total_row("Net Revenue")
+    scale = 10_000_000
+
+    def metric_row(display, metric_type, source):
+        row = MIS.total_row(source)
+        out = empty_metric(metric_type)
+        out["label"] = display
+        if metric_type == "pct":
+            numerator = {
+                "Gross Margin %": "Gross Margin",
+                "Contribution %": "Contribution",
+                "EBITDA %": "EBITDA",
+            }.get(source)
+            num_row = MIS.total_row(numerator) if numerator else None
+            for key, month_key in (("curr", "cur"), ("prior", "ly"), ("ytd", "ytd"), ("ytdPrior", "ytdLy"), ("ttm", "ttm"), ("ttmPrior", "ttmLy")):
+                if num_row and net_rev_row:
+                    out[key] = ratio(MIS.period_sum(num_row, months[month_key]), MIS.period_sum(net_rev_row, months[month_key]))
+                else:
+                    out[key] = MIS.period_sum(row, months[month_key]) if row else None
+            return out
+        for key, month_key in (("curr", "cur"), ("prior", "ly"), ("ytd", "ytd"), ("ytdPrior", "ytdLy"), ("ttm", "ttm"), ("ttmPrior", "ttmLy")):
+            value = MIS.period_sum(row, months[month_key]) if row else None
+            out[key] = value * scale if value is not None and metric_type == "abs" else value
+        if metric_type == "abs" and source in ("Gross Margin", "Contribution", "EBITDA") and net_rev_row:
+            # Percent rows are primary, but this keeps ratios recoverable if future
+            # summary files omit explicit percentage rows.
+            pass
+        return out
+
+    def channel_segmental():
+        if "Channel wiseMIS" not in wb.sheetnames:
+            return []
+        cws = wb["Channel wiseMIS"]
+        date_cols = {}
+        for c in range(1, cws.max_column + 1):
+            d = cws.cell(4, c).value
+            if isinstance(d, (datetime.datetime, datetime.date)):
+                for offset in range(4):
+                    ch = cws.cell(5, c + offset).value
+                    if isinstance(ch, str) and ch.strip().lower() not in ("", "total"):
+                        date_cols[(d.year, d.month, ch.strip())] = c + offset
+
+        rev_row = None
+        for r in range(1, cws.max_row + 1):
+            label = cws.cell(r, 3).value
+            if isinstance(label, str) and label.strip().lower() == "gross revenue (including channel margin)":
+                rev_row = r
+                break
+        if rev_row is None:
+            return []
+
+        channels = []
+        known_order = ["Marketplace", "Retail", "D2C"]
+        found = []
+        for _, _, name in sorted(date_cols):
+            if name not in found:
+                found.append(name)
+        channels = [x for x in known_order if x in found] + [x for x in found if x not in known_order]
+
+        def series(name):
+            out = empty_metric("abs")
+            for key, month_key in (("curr", "cur"), ("prior", "ly"), ("ytd", "ytd"), ("ytdPrior", "ytdLy"), ("ttm", "ttm"), ("ttmPrior", "ttmLy")):
+                total = 0.0
+                seen = False
+                for y, m in months[month_key]:
+                    col = date_cols.get((y, m, name))
+                    if not col:
+                        continue
+                    value = cws.cell(rev_row, col).value
+                    if isinstance(value, (int, float)):
+                        total += value
+                        seen = True
+                out[key] = total if seen else None
+            return out
+
+        gp = empty_metric("abs")
+        gm = empty_metric("pct")
+        return [{"label": name.strip(), "rev": series(name), "gp": gp.copy(), "gm": gm.copy()} for name in channels]
+
+    particulars = [metric_row(*d) for d in metric_defs]
+    monthname = datetime.date(ry, rm, 1).strftime("%b %Y")
+    fy = f"FY{str((fy_start_year(ry, rm) + 1))[2:]}"
+    checks = [
+        ("Ultrahuman MIS sheet", ws.title, True),
+        ("Reporting month detected", f"{ry:04d}-{rm:02d}", True),
+        ("Required metrics found", f"{sum(1 for _, _, s in metric_defs if MIS.total_row(s))}/{len(metric_defs)}", True),
+    ]
+    return {
+        "meta": {
+            "month": monthname,
+            "fy": fy,
+            "company": company_name(),
+            "subtitle": "Monthly performance review — Actuals vs LY, AOP and Blume Model",
+            "reportingYM": [ry, rm],
+            "segmentTitle": "Revenue by channel",
+            "segmentLabel": "Channel",
+            "links": {
+                "mis": "https://drive.google.com/drive/folders/1x3yk1oT4eQrMW_Rpy3V9HAa1fVSHuMhG",
+                "model": "https://docs.google.com/spreadsheets/d/1-zLSKGjul7KWBm0t1KpfWb4_O6_jBoXM/edit",
+            },
+        },
+        "particulars": particulars,
+        "segmental": channel_segmental(),
+        "refurb": {"units": empty_metric("count"), "asp": empty_metric("asp"), "channels": {"online": {}, "retail": {}}},
+    }, checks
+
+
 # ----------------------------------------------------------------------------- #
 def build(mis_path, model_path):
-    MIS = Sheet(openpyxl.load_workbook(mis_path, data_only=True)["Consolidated"])
+    wb_mis = openpyxl.load_workbook(mis_path, data_only=True)
+    if "Consolidated" not in wb_mis.sheetnames:
+        return build_ultrahuman(mis_path, model_path)
+    MIS = Sheet(wb_mis["Consolidated"])
     wbm = openpyxl.load_workbook(model_path, data_only=True)
     MODEL = Sheet(wbm["Consolidated - P&L"])
 
@@ -465,8 +651,14 @@ def main():
         print(f"  [{'PASS' if passed else 'FAIL'}] {name}: {val}")
         ok = ok and passed
     print("─ headline (Month) ─")
-    for lab in ["Revenue Post-Tax", "Gross Margin 2%", "EBITDA", "EBITDA%"]:
-        p = next(x for x in mis_block["particulars"] if x["label"] == lab)
+    available = {x["label"]: x for x in mis_block["particulars"]}
+    headlines = ["Revenue Post-Tax", "Gross Margin 2%", "EBITDA", "EBITDA%"]
+    if "Revenue Post-Tax" not in available:
+        headlines = ["Gross Revenue", "Net Revenue", "Gross Margin", "EBITDA Margin"]
+    for lab in headlines:
+        p = available.get(lab)
+        if not p:
+            continue
         print(f"  {lab}: curr={p['curr']}  prior={p['prior']}  aop={p['aop']}  model={p['model']}")
     if not ok:
         print("⚠️  one or more checks FAILED — inspect before deploying")
