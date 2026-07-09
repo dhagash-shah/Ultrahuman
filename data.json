@@ -400,7 +400,83 @@
     }
   },
   "comps": {
-    "publicMarkets": {},
+    "publicMarkets": {
+      "subject": {
+        "company": "Ultrahuman",
+        "status": "Private",
+        "marketCap": 3325.0,
+        "revenue": 651.0,
+        "revGrowth": 0.125,
+        "grossMargin": 0.4930875576036866,
+        "ebitdaMargin": -0.1858678955453149,
+        "mcRevenue": 5.10752688172043,
+        "mcEbitda": null
+      },
+      "peers": [
+        {
+          "company": "Apple",
+          "status": "Public",
+          "marketCap": 42800000.0,
+          "revenue": 4161610.0,
+          "revGrowth": 0.064,
+          "grossMargin": 0.4690516410716045,
+          "ebitdaMargin": 0.34842284596586415,
+          "mcRevenue": 10.28448124644068,
+          "mcEbitda": 29.517241379310345
+        },
+        {
+          "company": "Garmin",
+          "status": "Public",
+          "marketCap": 459000.0,
+          "revenue": 72460.0,
+          "revGrowth": 0.151,
+          "grossMargin": 0.586944521115098,
+          "ebitdaMargin": 0.2851228263869721,
+          "mcRevenue": 6.334529395528567,
+          "mcEbitda": 22.216844143272024
+        },
+        {
+          "company": "Oura",
+          "status": "Private",
+          "marketCap": 110000.0,
+          "revenue": 10000.0,
+          "revGrowth": 1.0,
+          "grossMargin": null,
+          "ebitdaMargin": 0.0,
+          "mcRevenue": 11.0,
+          "mcEbitda": null
+        },
+        {
+          "company": "Whoop",
+          "status": "Private",
+          "marketCap": 101000.0,
+          "revenue": 11000.0,
+          "revGrowth": 1.03,
+          "grossMargin": null,
+          "ebitdaMargin": 0.0,
+          "mcRevenue": 9.181818181818182,
+          "mcEbitda": null
+        }
+      ],
+      "stats": {
+        "mean": {
+          "mcRevenue": 9.200207205946857,
+          "mcEbitda": 25.867042761291184
+        },
+        "median": {
+          "mcRevenue": 9.733149714129432,
+          "mcEbitda": 25.867042761291184
+        },
+        "high": {
+          "mcRevenue": 11.0,
+          "mcEbitda": 29.517241379310345
+        },
+        "low": {
+          "mcRevenue": 6.334529395528567,
+          "mcEbitda": 22.216844143272024
+        }
+      }
+    },
     "conCalls": [
       {
         "company": "Apple, Inc.",
