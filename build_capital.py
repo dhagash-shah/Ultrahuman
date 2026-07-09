@@ -210,7 +210,11 @@ def main():
     pdf, ip, gh = sys.argv[1], sys.argv[2], sys.argv[3]
     out_path    = sys.argv[4] if len(sys.argv) > 4 else "data.json"
 
-    cap, cap_total = parse_captable_pdf(pdf)
+    try:
+        cap, cap_total = parse_captable_pdf(pdf)
+    except Exception as e:
+        print(f"⚠️  skipped cap-table PDF parse: {e}")
+        cap, cap_total = [], None
     blume          = parse_investment_profile(ip)
     rounds_data    = parse_rounds_from_gh(gh)
 
@@ -231,8 +235,11 @@ def main():
     Path(out_path).write_text(json.dumps(data, indent=2, ensure_ascii=False))
 
     print(f"✓ wrote capital block to {out_path}")
-    print(f"  cap table: {len(cap)} holders · total {cap_total*100:.2f}%")
-    print(f"  Blume: stake {blume['currentStake']*100:.2f}% · cost ₹{blume['investmentCostCr']:.1f} Cr · MTM ₹{blume['mtmCr']:.1f} Cr · {blume['moic']}x")
+    total_text = f"{cap_total*100:.2f}%" if cap_total is not None else "not parsed"
+    print(f"  cap table: {len(cap)} holders · total {total_text}")
+    stake = blume["currentStake"] * 100 if blume.get("currentStake") is not None else None
+    print(f"  Blume: stake {stake:.2f}% · cost ₹{blume['investmentCostCr']:.1f} Cr · MTM ₹{blume['mtmCr']:.1f} Cr · {blume['moic']}x" if stake is not None else
+          f"  Blume: cost ₹{blume['investmentCostCr']:.1f} Cr · MTM ₹{blume['mtmCr']:.1f} Cr · {blume['moic']}x")
     print(f"  rounds: {len(rounds_data['rounds'])} · total primary ₹{rounds_data['totalPrimaryRaisedCr']} Cr")
 
 if __name__ == "__main__":
