@@ -611,10 +611,38 @@
   ],
   "meetings": {
     "source": "Granola",
-    "items": [],
+    "items": [
+      {
+        "title": "Blume <> Ultrahuman monthly catchup",
+        "date": "2026-06-03",
+        "lastEdited": "2026-06-04T11:31:39.537Z",
+        "url": "https://notes.granola.ai/d/251571bb-ba57-40e3-a2e2-499bfea3bbe0",
+        "source": "Granola",
+        "sections": [
+          "Funding Round Update",
+          "Ring Pro Launch & Supply Chain",
+          "Market Competition & Positioning",
+          "Growth & Market Expansion"
+        ],
+        "bullets": [
+          "$30M first tranche completed - money in bank",
+          "EGM completed Friday, shares allotted Thursday",
+          "Targeting additional $22M in next 30 days",
+          "Key investors progressing:",
+          "Qualcomm: term sheet signed, legal diligence underway (2 weeks estimated)"
+        ],
+        "attendees": [
+          "Dhagash"
+        ]
+      }
+    ],
     "meta": {
-      "status": "missing_api_key",
-      "message": "Set GRANOLA_API_KEY in this GitHub repository."
+      "status": "ok",
+      "query": "ultrahuman",
+      "fetched": 30,
+      "checked": 30,
+      "matched": 1,
+      "message": null
     }
   }
 }
