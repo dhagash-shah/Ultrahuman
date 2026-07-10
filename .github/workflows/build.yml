@@ -68,15 +68,12 @@ jobs:
           GRANOLA_ALLOW_RECENT_FALLBACK: ${{ vars.GRANOLA_ALLOW_RECENT_FALLBACK }}
         run: python3 build_meetings_granola.py data.json
 
-      - name: Pull Google Alerts news from Gmail
+      - name: Pull web news from Google News RSS
         env:
-          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
-          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
-          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
-          GMAIL_NEWS_QUERY: ${{ vars.GMAIL_NEWS_QUERY }}
-          GMAIL_NEWS_LOOKBACK_DAYS: ${{ vars.GMAIL_NEWS_LOOKBACK_DAYS }}
-          GMAIL_NEWS_LIMIT: ${{ vars.GMAIL_NEWS_LIMIT }}
-        run: python3 build_gmail_news.py data.json
+          WEB_NEWS_QUERIES: ${{ vars.WEB_NEWS_QUERIES }}
+          WEB_NEWS_LOOKBACK_DAYS: ${{ vars.WEB_NEWS_LOOKBACK_DAYS }}
+          WEB_NEWS_LIMIT: ${{ vars.WEB_NEWS_LIMIT }}
+        run: python3 build_web_news.py data.json
 
       - name: Commit and push updated data.json
         run: |
