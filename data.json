@@ -613,133 +613,23 @@
     "source": "Granola",
     "items": [
       {
-        "title": "SuperK - Monthly MIS discussion",
-        "date": "2026-06-26",
-        "lastEdited": "2026-06-26T08:38:21.051Z",
-        "url": "https://notes.granola.ai/d/38f4d601-dad1-4724-af94-a53dde95b67c",
+        "title": "Blume <> Ultrahuman monthly catchup",
+        "date": "2026-06-03",
+        "lastEdited": "2026-06-04T11:31:39.537Z",
+        "url": "https://notes.granola.ai/d/251571bb-ba57-40e3-a2e2-499bfea3bbe0",
         "source": "Granola",
         "sections": [
-          "Financials: April and May Overview",
-          "Inventory Valuation Issue (Tally to Zoho Migration)",
-          "Burn vs. AOP and Cost Guidance",
-          "Marketing Spend and Member Acquisition"
+          "Funding Round Update",
+          "Ring Pro Launch & Supply Chain",
+          "Market Competition & Positioning",
+          "Growth & Market Expansion"
         ],
         "bullets": [
-          "Store count: 156 (April), 159 (May); 6 new stores opened, 3 closed",
-          "5 new stores are cone format, 1 is four-poster",
-          "Revenue: 11.87 cr (April), 13.31 cr (May)",
-          "COGS: 85.4% (April), 88% (May)",
-          "May spike due to inventory valuation errors migrated from Tally to Zoho (see below)"
-        ],
-        "attendees": [
-          "Dhagash",
-          "Vikram Gawande",
-          "Anirudh",
-          "Neeraj Menta",
-          "Sarita Raichura",
-          "Anil Thontepu"
-        ]
-      },
-      {
-        "title": "Discussion | Blume <> Zopper",
-        "date": "2026-06-25",
-        "lastEdited": "2026-06-26T07:29:17.740Z",
-        "url": "https://notes.granola.ai/d/bd4e4491-a4be-482a-992b-64ea4fb2551b",
-        "source": "Granola",
-        "sections": [
-          "Claims Cost Benchmarking (CSC Discussion)",
-          "AI and Automation in Claims Processing",
-          "Fraud Detection Capabilities",
-          "Channel Commissions and Competitive Dynamics"
-        ],
-        "bullets": [
-          "Zopper flagged two key caveats on CSC benchmarking vs. peers like Assurant",
-          "Better metric: CSC as % of device cost, not % of GWP or revenue",
-          "Plan mix matters: AC repair costs can be 10-20x refrigerator repair costs on same device value",
-          "Blume’s intent was not to set a target vs. peers, but to understand operational tools and efficiency levers",
-          "Industry data: AI-driven claims handling cuts cost per claim from $35-60 to $10-15 (roughly 70% reduction)"
-        ],
-        "attendees": [
-          "Dhagash",
-          "Mayank Gupta",
-          "Vikram Gawande",
-          "Ea",
-          "Achal Modi",
-          "Rahul Singh"
-        ]
-      },
-      {
-        "title": "SuperK<>Blume | In-person Meeting",
-        "date": "2026-06-02",
-        "lastEdited": "2026-06-05T06:46:58.532Z",
-        "url": "https://notes.granola.ai/d/ded5b152-a478-4ec3-b5f6-8e7bed2bf918",
-        "source": "Granola",
-        "sections": [
-          "Dark Store Strategy & Expansion Plans",
-          "New Hire & F&V Operations",
-          "Current Performance & Store Metrics",
-          "Franchise Model Challenges & Solutions"
-        ],
-        "bullets": [
-          "Launching dark store in Kadapa by July to handle increased demand",
-          "Target: 1,000 orders/day (currently 200-250)",
-          "3,000 sq ft facility to replicate full store experience",
-          "Addressing capacity constraints - existing 5 stores max 80-90 orders/day each",
-          "Rationale: Blinkit launching next month in Kadapa"
-        ],
-        "attendees": [
-          "Dhagash",
-          "Vikram Gawande",
-          "Neeraj Menta",
-          "Anil Thontepu"
-        ]
-      },
-      {
-        "title": "Euler Motors I Q4FY26 I Business Update Meeting",
-        "date": "2026-05-27",
-        "lastEdited": "2026-06-06T05:59:12.216Z",
-        "url": "https://notes.granola.ai/d/d905f249-a237-437b-bcf2-f2ff84adf6a1",
-        "source": "Granola",
-        "sections": [
-          "Financial Performance FY26",
-          "Q4 Financial Results",
-          "Debt and Equity Funding",
-          "Four-Wheeler Cargo Success"
-        ],
-        "bullets": [
-          "Achieved AOP target: ₹443 crores planned vs ₹401 crores realized (100% of target)",
-          "Volume milestone: 7,576 vehicles sold (highest ever)",
-          "ASP performance: ₹5.10 lakh vs ₹4.41 lakh planned",
-          "Driven by positive product mix and turbo contribution",
-          "Subsidiary impact from three-minute fiber"
-        ],
-        "attendees": [
-          "Dhagash",
-          "Joseph Sebastian",
-          "Shubham Gururani",
-          "Sidharath Jain",
-          "Saurav Kumar",
-          "Sudarshan Jain"
-        ]
-      },
-      {
-        "title": "01/2026-27 meeting of the Board of Directors of Solvy Tech Solutions Private Limited",
-        "date": "2026-05-26",
-        "lastEdited": "2026-05-27T08:32:43.005Z",
-        "url": "https://notes.granola.ai/d/c0f22eeb-0de4-47e4-9f88-8e04cd48157a",
-        "source": "Granola",
-        "sections": [
-          "FY26 Financial Performance Summary",
-          "FY27 Projections & Business Outlook",
-          "Business Segment Performance",
-          "Partnership & Channel Updates"
-        ],
-        "bullets": [
-          "GWP reached ₹720 crores with strong Q4 performance",
-          "EBITDA at -₹7.2 crores with 2 positive months in FY26",
-          "GM improved to 12.9% of GWP, 30.9% of revenue",
-          "Venture debt funding closed: ₹20 crores (₹10+10 structure)",
-          "First profitable quarter achieved in Q4 with ₹1.2 crores profit"
+          "$30M first tranche completed - money in bank",
+          "EGM completed Friday, shares allotted Thursday",
+          "Targeting additional $22M in next 30 days",
+          "Key investors progressing:",
+          "Qualcomm: term sheet signed, legal diligence underway (2 weeks estimated)"
         ],
         "attendees": [
           "Dhagash"
@@ -748,10 +638,10 @@
     ],
     "meta": {
       "status": "ok",
-      "query": "",
+      "query": "ultrahuman",
       "fetched": 30,
-      "checked": 20,
-      "matched": 5,
+      "checked": 30,
+      "matched": 1,
       "message": null
     }
   }
