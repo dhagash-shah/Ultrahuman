@@ -26,7 +26,7 @@ def api_key():
 
 
 def base_url():
-    return os.environ.get("GRANOLA_API_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
+    return (os.environ.get("GRANOLA_API_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
 
 
 def int_env(name, default, lo=None, hi=None):
