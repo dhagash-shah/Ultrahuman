@@ -22,7 +22,8 @@
       "links": {
         "mis": "https://drive.google.com/drive/folders/1x3yk1oT4eQrMW_Rpy3V9HAa1fVSHuMhG",
         "model": "https://docs.google.com/spreadsheets/d/1-zLSKGjul7KWBm0t1KpfWb4_O6_jBoXM/edit"
-      }
+      },
+      "modelBasis": "Growth Huddle Model FY26; monthly model shown as annual / 12"
     },
     "particulars": [
       {
@@ -46,15 +47,15 @@
         "curr": 425914117.6838869,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": 966096216.0666666,
         "ytd": 11278548551.074635,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": 11593154592.8,
         "ttm": 11278548551.074635,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": 11593154592.8,
         "label": "Gross Revenue"
       },
       {
@@ -62,15 +63,15 @@
         "curr": 199488466.4402053,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": 663719558.3333334,
         "ytd": 6510370927.735359,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": 7964634700.0,
         "ttm": 6510370927.735359,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": 7964634700.0,
         "label": "Net Revenue"
       },
       {
@@ -78,15 +79,15 @@
         "curr": 88518345.16576383,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": 335026042.0833333,
         "ytd": 3212438147.3849,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": 4020312505.0,
         "ttm": 3212438147.3849,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": 4020312505.0,
         "label": "Gross Profit"
       },
       {
@@ -94,15 +95,15 @@
         "curr": 0.44372663114484523,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": 0.5047704830706171,
         "ytd": 0.4934339660585746,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": 0.5047704830706171,
         "ttm": 0.4934339660585746,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": 0.5047704830706171,
         "label": "Gross Margin"
       },
       {
@@ -142,15 +143,15 @@
         "curr": -279464594.37143916,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": -71903623.75,
         "ytd": -1291819493.7913854,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": -862843485.0,
         "ttm": -1291819493.7913854,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": -862843485.0,
         "label": "EBITDA"
       },
       {
@@ -158,15 +159,15 @@
         "curr": -1.4009060240843842,
         "prior": null,
         "aop": null,
-        "model": null,
+        "model": -0.10833434520229786,
         "ytd": -0.19842486828023886,
         "ytdPrior": null,
         "ytdAop": null,
-        "ytdModel": null,
+        "ytdModel": -0.10833434520229786,
         "ttm": -0.19842486828023886,
         "ttmPrior": null,
         "ttmAop": null,
-        "ttmModel": null,
+        "ttmModel": -0.10833434520229786,
         "label": "EBITDA Margin"
       }
     ],
@@ -390,8 +391,69 @@
     "rounds": [],
     "totalPrimaryRaisedCr": null,
     "latestValuation": null,
-    "capTable": [],
-    "capTableTotalPct": null,
+    "capTable": [
+      {
+        "name": "Blume Ventures",
+        "group": "Investor",
+        "pct": 0.0927
+      },
+      {
+        "name": "Founders",
+        "group": "Founders",
+        "pct": 0.2272
+      },
+      {
+        "name": "Nexus",
+        "group": "Investor",
+        "pct": 0.1412
+      },
+      {
+        "name": "AWI",
+        "group": "Investor",
+        "pct": 0.1122
+      },
+      {
+        "name": "Deepinder Goyal",
+        "group": "Investor",
+        "pct": 0.0675
+      },
+      {
+        "name": "Steadview",
+        "group": "Investor",
+        "pct": 0.037
+      },
+      {
+        "name": "Flintera",
+        "group": "Investor",
+        "pct": 0.1088
+      },
+      {
+        "name": "Qualcomm",
+        "group": "Investor",
+        "pct": 0.0272
+      },
+      {
+        "name": "Alteria",
+        "group": "Investor",
+        "pct": 0.0012
+      },
+      {
+        "name": "Others",
+        "group": "Investor",
+        "pct": 0.0322
+      },
+      {
+        "name": "MSOP",
+        "group": "ESOP",
+        "pct": 0.03
+      },
+      {
+        "name": "ESOP pool",
+        "group": "ESOP",
+        "pct": 0.1199
+      }
+    ],
+    "capTableTotalPct": 0.9971,
     "links": {
       "capTable": "https://drive.google.com/drive/folders/1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz",
       "valuation": "https://drive.google.com/drive/folders/1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz",
@@ -548,6 +610,11 @@
     }
   ],
   "meetings": {
-    "items": []
+    "source": "Granola",
+    "items": [],
+    "meta": {
+      "status": "missing_api_key",
+      "message": "Set GRANOLA_API_KEY in this GitHub repository."
+    }
   }
 }
