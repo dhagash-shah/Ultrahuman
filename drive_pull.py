@@ -22,7 +22,7 @@ Downloads:
 Handles both uploaded files and native Google Sheets (exported to .xlsx).
 """
 import os, io, json, re, sys
-from datetime import datetime
+from datetime import datetime, timezone
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.http import MediaIoBaseDownload
@@ -65,10 +65,20 @@ def list_files(svc, folder_id, extra_q="", page_size=100):
     q = f"'{folder_id}' in parents and trashed=false"
     if extra_q:
         q += f" and ({extra_q})"
-    res = svc.files().list(q=q, orderBy="modifiedTime desc", pageSize=page_size,
-                           fields="files(id,name,mimeType,modifiedTime)",
-                           supportsAllDrives=True, includeItemsFromAllDrives=True).execute()
-    return res.get("files", [])
+    files = []
+    page_token = None
+    while True:
+        res = svc.files().list(
+            q=q, orderBy="modifiedTime desc", pageSize=page_size,
+            fields="nextPageToken,files(id,name,mimeType,modifiedTime)",
+            pageToken=page_token,
+            supportsAllDrives=True, includeItemsFromAllDrives=True,
+        ).execute()
+        files.extend(res.get("files", []))
+        page_token = res.get("nextPageToken")
+        if not page_token:
+            return files
+
 
 def get_file(svc, file_id):
     return svc.files().get(
@@ -122,9 +132,10 @@ def month_key(name):
 
 def modified_key(f):
     try:
-        return datetime.fromisoformat(f["modifiedTime"].replace("Z", "+00:00"))
+        value = datetime.fromisoformat(f["modifiedTime"].replace("Z", "+00:00"))
+        return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value
     except Exception:
-        return datetime.min
+        return datetime.min.replace(tzinfo=timezone.utc)
 
 def newest_by_modified(svc, folder_id, predicate, label):
     visible = list_files(svc, folder_id)
