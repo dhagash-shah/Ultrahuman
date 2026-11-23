@@ -32,10 +32,20 @@ ROOT_FOLDER_ID = os.environ.get("CASHIFY_ROOT_FOLDER_ID", os.environ.get("DRIVE_
 SHEET_MIME = "application/vnd.google-apps.spreadsheet"
 XLSX_MIME  = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
+def configured_cap_folder():
+    """Migrate the retired folder to Funding Rounds / Cap Tables.
+
+    Keep any other explicit repository override unchanged.
+    """
+    configured = os.environ.get("CASHIFY_CAP_TABLES_FOLDER_ID", "").strip()
+    if not configured or configured == "1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz":
+        return "19-4RzHtmpfbnJcw1DjGR24PbIAY2mn9_"
+    return configured
+
 FOLDER_ENV = {
     "mis": os.environ.get("CASHIFY_MIS_FOLDER_ID"),
     "growth": os.environ.get("CASHIFY_GROWTH_HUDDLE_FOLDER_ID"),
-    "cap": os.environ.get("CASHIFY_CAP_TABLES_FOLDER_ID"),
+    "cap": configured_cap_folder(),
 }
 
 FILE_ENV = {

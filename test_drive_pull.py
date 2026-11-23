@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 import drive_pull as drive
 
 class DriveDiscoveryTests(unittest.TestCase):
@@ -14,5 +14,14 @@ class DriveDiscoveryTests(unittest.TestCase):
   self.assertEqual(sorted(files,key=drive.modified_key,reverse=True)[0]['id'],'good')
  def test_month_selection(self):
   self.assertEqual(drive.month_key('MIS September 2026.xlsx'),(2026,9))
+
+class CapFolderMigrationTests(unittest.TestCase):
+ def test_retired_folder_is_replaced(self):
+  for previous in ('', '1vn_8fIlOVM5EjtJtG5n1tMmnw2kDZLMz'):
+   with patch.dict(drive.os.environ,{'CASHIFY_CAP_TABLES_FOLDER_ID':previous}):
+    self.assertEqual(drive.configured_cap_folder(),'19-4RzHtmpfbnJcw1DjGR24PbIAY2mn9_')
+ def test_custom_folder_is_preserved(self):
+  with patch.dict(drive.os.environ,{'CASHIFY_CAP_TABLES_FOLDER_ID':'custom-folder'}):
+   self.assertEqual(drive.configured_cap_folder(),'custom-folder')
 
 if __name__=='__main__':unittest.main()
