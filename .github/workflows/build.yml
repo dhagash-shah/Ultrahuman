@@ -1,6 +1,9 @@
 name: Refresh data.json from Google Drive
 
 on:
+  push:
+    branches: [main]
+    paths: ["drive_pull.py", "test_drive_pull.py", ".github/workflows/**"]
   # Run on the 1st of every month at 6:00 AM IST (00:30 UTC)
   schedule:
     - cron: "30 0 1 * *"
@@ -24,6 +27,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Check Drive discovery
+        run: python3 -m unittest -v test_drive_pull.py
 
       - name: Pull files from Google Drive
         env:

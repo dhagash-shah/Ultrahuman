@@ -23,9 +23,6 @@ Handles both uploaded files and native Google Sheets (exported to .xlsx).
 """
 import os, io, json, re, sys
 from datetime import datetime, timezone
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
-from googleapiclient.http import MediaIoBaseDownload
 
 COMPANY_NAME = os.environ.get("COMPANY_NAME", "Ultrahuman")
 ROOT_FOLDER_ID = os.environ.get("CASHIFY_ROOT_FOLDER_ID", os.environ.get("DRIVE_FOLDER_ID", "1TlP_wE_sZ15qi0qdod0NUssqXcC50e-6"))
@@ -59,6 +56,9 @@ def env_truthy(name):
     return str(os.environ.get(name, "")).strip().lower() in {"1", "true", "yes", "y"}
 
 def client():
+    from googleapiclient.discovery import build
+    from google.oauth2 import service_account
+
     raw = (
         os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
         or os.environ.get("GDRIVE_CREDENTIALS")
@@ -173,6 +173,8 @@ def latest_mis_by_filename_month(svc, folder_id):
     return ranked[0][2]
 
 def download(svc, f, out_path):
+    from googleapiclient.http import MediaIoBaseDownload
+
     if f["mimeType"] == SHEET_MIME:
         req = svc.files().export_media(fileId=f["id"], mimeType=XLSX_MIME)
     else:
