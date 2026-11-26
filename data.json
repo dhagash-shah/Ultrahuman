@@ -446,18 +446,6 @@
         "type": "Industry",
         "company": "",
         "theme": "Wearables",
-        "source": "Women's Health",
-        "headline": "Oura Ring 5 review: The world’s smallest smart ring is £100 off for Black Friday - Women's Health",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOekVEa2dzeldSNEtPLXBFNElMVDdzYXJEVnBtNHhKdzlUZFNLaG96Njk5LTJrN2J4dGRSUnZ5aGhtQjF0SDl3WHVvSmJqRmVsbDRTRnZHMXo5R3N2djNpSG1NYXA0cjh0TVFaYU92c1l4NDMtZ0tKSE1xSFZsVFI2UEdIcVM?oc=5",
-        "summary": "Oura Ring 5 review: The world’s smallest smart ring is £100 off for Black Friday Women's Health",
-        "sentiment": "",
-        "relevance": "Web News"
-      },
-      {
-        "date": "2026-11-26",
-        "type": "Industry",
-        "company": "",
-        "theme": "Wearables",
         "source": "SQ Magazine",
         "headline": "Wearable technology in 2026: the growth left the smartwatch and moved to glasses, rings and glucose sensors - SQ Magazine",
         "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE92R3RvMzZkaklvcUNfYVFmLVJBX1htd1lQOW1ZLVAteVEyY2dzWGtHMUUtM0t1UWFlRWtlN0hMRUxwOU5XdW9oSDdWaUU1S25YRGNxbWVrMXZEbndTNmxXYnM3Z2g5S1E?oc=5",
@@ -782,10 +770,10 @@
         "type": "Industry",
         "company": "",
         "theme": "Wearables",
-        "source": "Bilyonaryo Business",
-        "headline": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring - Bilyonaryo Business",
-        "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOTkRCalBRQnBBdUNRaURmLWliWFNmX3NxU0RmU3FySU5ZY2xUcnh1UWV3ZTNtbDJRX1E2Vm1TMTRwaHJfYkkwSy1FdERSNENxTmNIWmc0VmRmYTc1cWs3UVY3a0wxa3Z0TUtIU1Z3bDBxZUc1RnB2UGEwMFZoT1dZRFY3RXViZkN3dzB1MkZDT05JeDA2Uld2Q3l4Y252NzdBZ2l5Z2U5SW9IbjlTYTdKUnhKN1pqX3pwSXhIUXJJb0pOam9vc1BwQWNuV2ZpZ2NOdTJ1dzZTcERsdGxQYjdteHo3MG9ZUUlmcXJuV29R?oc=5",
-        "summary": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring Bilyonaryo Business",
+        "source": "The Telegraph",
+        "headline": "Your fitness tracker could save your life. Here are the metrics to check - The Telegraph",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNS0lVUE5lZVBHWWVLMGFIc2hEWVJOc21tanBPdFYxS3lBQktUSGRLR1hVVmdEYUJrX2lHZDJSUWt6SkV6WDFrTENFaTBKZ2U0d19YLTNRSlA5OUV2T0dWY2I4VUhDdUdNUUh4azMtMlFKSUZGTTVvOFJWZVRlSDBjV0ljbW55TFdtZ0NWajZEY24wZ29wTWp0QktjVXk?oc=5",
+        "summary": "Your fitness tracker could save your life. Here are the metrics to check The Telegraph",
         "sentiment": "",
         "relevance": "Web News"
       },
@@ -794,27 +782,27 @@
         "type": "Industry",
         "company": "",
         "theme": "Wearables",
-        "source": "The Telegraph",
-        "headline": "Your fitness tracker could save your life. Here are the metrics to check - The Telegraph",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNS0lVUE5lZVBHWWVLMGFIc2hEWVJOc21tanBPdFYxS3lBQktUSGRLR1hVVmdEYUJrX2lHZDJSUWt6SkV6WDFrTENFaTBKZ2U0d19YLTNRSlA5OUV2T0dWY2I4VUhDdUdNUUh4azMtMlFKSUZGTTVvOFJWZVRlSDBjV0ljbW55TFdtZ0NWajZEY24wZ29wTWp0QktjVXk?oc=5",
-        "summary": "Your fitness tracker could save your life. Here are the metrics to check The Telegraph",
+        "source": "Newcastle University",
+        "headline": "What can walking tell us about how Parkinson’s medication is working? - Newcastle University",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQdHlVQmlFbE9DTUtQakFVeGdET00tdVZiM3hIM05tMVEtbW5iZnVpeTFxWkJhNkxlazdmZ2ZVMk9FMERQQzRQMkt3V0haeWlCcUFiYzAtNThRT0RKal9rMy1JbFFsTmVNVjFqZ3liQXc5ZUZMQjl4a1FpOTM4X1Nra2tuaXpNY3d4N2RscQ?oc=5",
+        "summary": "What can walking tell us about how Parkinson’s medication is working? Newcastle University",
+        "sentiment": "",
+        "relevance": "Web News"
+      },
+      {
+        "date": "2026-11-25",
+        "type": "Industry",
+        "company": "",
+        "theme": "Wearables",
+        "source": "Bilyonaryo Business",
+        "headline": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring - Bilyonaryo Business",
+        "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOTkRCalBRQnBBdUNRaURmLWliWFNmX3NxU0RmU3FySU5ZY2xUcnh1UWV3ZTNtbDJRX1E2Vm1TMTRwaHJfYkkwSy1FdERSNENxTmNIWmc0VmRmYTc1cWs3UVY3a0wxa3Z0TUtIU1Z3bDBxZUc1RnB2UGEwMFZoT1dZRFY3RXViZkN3dzB1MkZDT05JeDA2Uld2Q3l4Y252NzdBZ2l5Z2U5SW9IbjlTYTdKUnhKN1pqX3pwSXhIUXJJb0pOam9vc1BwQWNuV2ZpZ2NOdTJ1dzZTcERsdGxQYjdteHo3MG9ZUUlmcXJuV29R?oc=5",
+        "summary": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring Bilyonaryo Business",
         "sentiment": "",
         "relevance": "Web News"
       }
     ],
     "industry": [
-      {
-        "date": "2026-11-26",
-        "type": "Industry",
-        "company": "",
-        "theme": "Wearables",
-        "source": "Women's Health",
-        "headline": "Oura Ring 5 review: The world’s smallest smart ring is £100 off for Black Friday - Women's Health",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOekVEa2dzeldSNEtPLXBFNElMVDdzYXJEVnBtNHhKdzlUZFNLaG96Njk5LTJrN2J4dGRSUnZ5aGhtQjF0SDl3WHVvSmJqRmVsbDRTRnZHMXo5R3N2djNpSG1NYXA0cjh0TVFaYU92c1l4NDMtZ0tKSE1xSFZsVFI2UEdIcVM?oc=5",
-        "summary": "Oura Ring 5 review: The world’s smallest smart ring is £100 off for Black Friday Women's Health",
-        "sentiment": "",
-        "relevance": "Web News"
-      },
       {
         "date": "2026-11-26",
         "type": "Industry",
@@ -1012,10 +1000,10 @@
         "type": "Industry",
         "company": "",
         "theme": "Wearables",
-        "source": "Bilyonaryo Business",
-        "headline": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring - Bilyonaryo Business",
-        "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOTkRCalBRQnBBdUNRaURmLWliWFNmX3NxU0RmU3FySU5ZY2xUcnh1UWV3ZTNtbDJRX1E2Vm1TMTRwaHJfYkkwSy1FdERSNENxTmNIWmc0VmRmYTc1cWs3UVY3a0wxa3Z0TUtIU1Z3bDBxZUc1RnB2UGEwMFZoT1dZRFY3RXViZkN3dzB1MkZDT05JeDA2Uld2Q3l4Y252NzdBZ2l5Z2U5SW9IbjlTYTdKUnhKN1pqX3pwSXhIUXJJb0pOam9vc1BwQWNuV2ZpZ2NOdTJ1dzZTcERsdGxQYjdteHo3MG9ZUUlmcXJuV29R?oc=5",
-        "summary": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring Bilyonaryo Business",
+        "source": "The Telegraph",
+        "headline": "Your fitness tracker could save your life. Here are the metrics to check - The Telegraph",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNS0lVUE5lZVBHWWVLMGFIc2hEWVJOc21tanBPdFYxS3lBQktUSGRLR1hVVmdEYUJrX2lHZDJSUWt6SkV6WDFrTENFaTBKZ2U0d19YLTNRSlA5OUV2T0dWY2I4VUhDdUdNUUh4azMtMlFKSUZGTTVvOFJWZVRlSDBjV0ljbW55TFdtZ0NWajZEY24wZ29wTWp0QktjVXk?oc=5",
+        "summary": "Your fitness tracker could save your life. Here are the metrics to check The Telegraph",
         "sentiment": "",
         "relevance": "Web News"
       },
@@ -1024,10 +1012,22 @@
         "type": "Industry",
         "company": "",
         "theme": "Wearables",
-        "source": "The Telegraph",
-        "headline": "Your fitness tracker could save your life. Here are the metrics to check - The Telegraph",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNS0lVUE5lZVBHWWVLMGFIc2hEWVJOc21tanBPdFYxS3lBQktUSGRLR1hVVmdEYUJrX2lHZDJSUWt6SkV6WDFrTENFaTBKZ2U0d19YLTNRSlA5OUV2T0dWY2I4VUhDdUdNUUh4azMtMlFKSUZGTTVvOFJWZVRlSDBjV0ljbW55TFdtZ0NWajZEY24wZ29wTWp0QktjVXk?oc=5",
-        "summary": "Your fitness tracker could save your life. Here are the metrics to check The Telegraph",
+        "source": "Newcastle University",
+        "headline": "What can walking tell us about how Parkinson’s medication is working? - Newcastle University",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQdHlVQmlFbE9DTUtQakFVeGdET00tdVZiM3hIM05tMVEtbW5iZnVpeTFxWkJhNkxlazdmZ2ZVMk9FMERQQzRQMkt3V0haeWlCcUFiYzAtNThRT0RKal9rMy1JbFFsTmVNVjFqZ3liQXc5ZUZMQjl4a1FpOTM4X1Nra2tuaXpNY3d4N2RscQ?oc=5",
+        "summary": "What can walking tell us about how Parkinson’s medication is working? Newcastle University",
+        "sentiment": "",
+        "relevance": "Web News"
+      },
+      {
+        "date": "2026-11-25",
+        "type": "Industry",
+        "company": "",
+        "theme": "Wearables",
+        "source": "Bilyonaryo Business",
+        "headline": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring - Bilyonaryo Business",
+        "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOTkRCalBRQnBBdUNRaURmLWliWFNmX3NxU0RmU3FySU5ZY2xUcnh1UWV3ZTNtbDJRX1E2Vm1TMTRwaHJfYkkwSy1FdERSNENxTmNIWmc0VmRmYTc1cWs3UVY3a0wxa3Z0TUtIU1Z3bDBxZUc1RnB2UGEwMFZoT1dZRFY3RXViZkN3dzB1MkZDT05JeDA2Uld2Q3l4Y252NzdBZ2l5Z2U5SW9IbjlTYTdKUnhKN1pqX3pwSXhIUXJJb0pOam9vc1BwQWNuV2ZpZ2NOdTJ1dzZTcERsdGxQYjdteHo3MG9ZUUlmcXJuV29R?oc=5",
+        "summary": "HUAWEI WATCH GT 7 Series and HUAWEI WATCH D3: Spotlight Research on Cardiovascular Health and Blood Pressure Monitoring Bilyonaryo Business",
         "sentiment": "",
         "relevance": "Web News"
       }
@@ -1173,8 +1173,8 @@
         "health wearable",
         "Oura OR WHOOP OR RingConn OR Ultrahuman"
       ],
-      "webNewsItemsSeen": 201,
-      "webNewsItemsAdded": 176
+      "webNewsItemsSeen": 180,
+      "webNewsItemsAdded": 156
     }
   },
   "specialProjects": [
